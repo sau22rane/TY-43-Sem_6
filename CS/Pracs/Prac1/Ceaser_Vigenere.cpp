@@ -12,6 +12,7 @@ class Ceaser{
     int security;
 
     public:
+    
     Ceaser();
     string Encrypt(string unEncryptedData);
     void BruteForece(string EncryptedData); 
@@ -19,6 +20,7 @@ class Ceaser{
     void updateSecret(int sec);
     int getSecretKey();
 };
+
 
 class Vigenere{
     private:
@@ -35,6 +37,8 @@ class Vigenere{
 
 void VigenereMenu(Vigenere *ptr);
 void CeaserMenu(Ceaser *ptr);
+
+
 
 
 Ceaser::Ceaser(){
@@ -92,6 +96,9 @@ void Ceaser::updateSecret(int sec){
 int Ceaser::getSecretKey(){
     return this->security;
 }
+
+
+
 
 
 

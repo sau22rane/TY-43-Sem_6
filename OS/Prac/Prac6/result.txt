@@ -1,0 +1,77 @@
+Number of Processes: 4
+Number of Memory Blocks: 5
+
+Process size:
+Process 1: 212
+Process 2: 417
+Process 3: 112
+Process 4: 426
+
+Memory Block size:
+Memory Block 1: 100
+Memory Block 2: 500
+Memory Block 3: 200
+Memory Block 4: 300
+Memory Block 5: 600
+
+================================================================================================================================================================================================
+
+
+First Fit
+Memory allocation
+Process 1 allocated in Block Number 2
+Process 2 allocated in Block Number 5
+Process 3 allocated in Block Number 2
+Process 4: Memory not allocated
+
+Memory Blocks:
+|  Free(100)(Blk 1)  |  Pr 1(212)(Blk 2)   |  Pr 3(112)(Blk 2)   |  Free(176)(Blk 2)  |  Free(200)(Blk 3)  |  Free(300)(Blk 4)  |  Pr 2(417)(Blk 5)   |  Free(183)(Blk 5)  |
+
+External Fragmentation: 959
+
+================================================================================================================================================================================================
+
+
+Best Fit
+Memory allocation
+Process 1 allocated in Block Number 4
+Process 2 allocated in Block Number 2
+Process 3 allocated in Block Number 3
+Process 4 allocated in Block Number 5
+
+Memory Blocks:
+|  Free(100)(Blk 1)  |  Pr 2(417)(Blk 2)   |  Free(83)(Blk 2)  |  Pr 3(112)(Blk 3)   |  Free(88)(Blk 3)  |  Pr 1(212)(Blk 4)   |  Free(88)(Blk 4)  |  Pr 4(426)(Blk 5)   |  Free(174)(Blk 5)  |
+
+External Fragmentation: 533
+
+================================================================================================================================================================================================
+
+
+Worst Fit
+Memory allocation
+Process 1 allocated in Block Number 5
+Process 2 allocated in Block Number 2
+Process 3 allocated in Block Number 5
+Process 4: Memory not allocated
+
+Memory Blocks:
+|  Free(100)(Blk 1)  |  Pr 2(417)(Blk 2)   |  Free(83)(Blk 2)  |  Free(200)(Blk 3)  |  Free(300)(Blk 4)  |  Pr 1(212)(Blk 5)   |  Pr 3(112)(Blk 5)   |  Free(276)(Blk 5)  |
+
+External Fragmentation: 959
+
+================================================================================================================================================================================================
+
+
+Next Fit
+Memory allocation
+Process 1 allocated in Block Number 2
+Process 2 allocated in Block Number 5
+Process 3 allocated in Block Number 5
+Process 4: Memory not allocated
+
+Memory Blocks:
+|  Free(100)(Blk 1)  |  Pr 1(212)(Blk 2)   |  Free(288)(Blk 2)  |  Free(200)(Blk 3)  |  Free(300)(Blk 4)  |  Pr 2(417)(Blk 5)   |  Pr 3(112)(Blk 5)   |  Free(71)(Blk 5)  |
+
+External Fragmentation: 959
+
+================================================================================================================================================================================================
