@@ -24,6 +24,7 @@ io.on('connection', function (socket) {
         numClients = myRoom.length;
 
         console.log(room, ' has ', numClients, ' clients');
+        console.log(socket.id+" joined");
 
         if (numClients == 0) {
             socket.join(room);
@@ -31,18 +32,17 @@ io.on('connection', function (socket) {
             socket.emit('created', room);
         } else if (numClients <= 2) {
             socket.join(room);
-            //socket.emit('joined', room);
+            // socket.emit('joined', room);
             new_client = socket.id;
-            io.to(room_owner).emit('owner', room);
+            // io.to(room_owner).emit('owner', room);
             io.to(new_client).emit('joined', room);
-            console.log('Owner: ', room_owner);
         } else {
             socket.emit('full', room);
         }
     });
 
-    socket.on('ready', function (room){
-        socket.broadcast.to(room).emit('ready');
+    socket.on('ready', function (event){
+        socket.broadcast.to(event.rn).emit('ready', event);
         //io.to(room_owner).emit('ready');
         //io.to(socket.id).emit('ready');
     });
@@ -54,14 +54,14 @@ io.on('connection', function (socket) {
     });
 
     socket.on('offer', function(event){
-        //socket.broadcast.to(event.room).emit('offer',event.sdp,numClients);
+        // socket.broadcast.to(event.room).emit('offer',event.sdp,numClients);
         //io.to(room_owner).emit('offer',event.sdp,numClients);
-        io.to(new_client).emit('offer',event.sdp,numClients);
+        io.to(new_client).emit('offer',event);
     });
 
     socket.on('answer', function(event){
-        //socket.broadcast.to(event.room).emit('answer',event.sdp,numClients);
-        io.to(room_owner).emit('answer',event.sdp,numClients);
+        // socket.broadcast.to(event.room).emit('answer',event.sdp,numClients);
+        io.to(event.to).emit('answer',event);
         //io.to(new_client).emit('answer',event.sdp,numClients);
     });
 
