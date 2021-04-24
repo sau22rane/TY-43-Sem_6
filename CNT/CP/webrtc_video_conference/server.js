@@ -6,6 +6,7 @@ var io = require('socket.io')(http);
 var room_owner;
 var new_client;
 var numClients;
+var Clients = [];
 
 const port = process.env.PORT || 3000;
 
@@ -25,12 +26,12 @@ io.on('connection', function (socket) {
 
         console.log(room, ' has ', numClients, ' clients');
         console.log(socket.id+" joined");
-
+        Clients.push(socket.id);
         if (numClients == 0) {
             socket.join(room);
             room_owner = socket.id;
             socket.emit('created', room);
-        } else if (numClients <= 2) {
+        } else if (numClients <= 6) {
             socket.join(room);
             // socket.emit('joined', room);
             new_client = socket.id;
@@ -48,9 +49,11 @@ io.on('connection', function (socket) {
     });
 
     socket.on('candidate', function (event){
-        socket.broadcast.to(event.room).emit('candidate', event,numClients);
-        //io.to(room_owner).emit('candidate', event);
-        //io.to(socket.id).emit('candidate', event);
+        // socket.broadcast.to(event.room).emit('candidate', event,numClients);
+        io.to(event.to).emit('candidate', event);
+        // io.to(event.from).emit('candidate', event);
+        console.log("sending to "+event.to+" and "+event.from);
+        // io.to(socket.id).emit('candidate', event);
     });
 
     socket.on('offer', function(event){

@@ -7,16 +7,17 @@ var localVideo = document.querySelector("#localVideo");
 var flag = 0;
 var length = 0;
 var socketId;
-var mixed;
 var remoteVideo =[]
 // remoteVideo.push(document.querySelector("#remoteVideo1"));
 // remoteVideo.push(document.querySelector("#remoteVideo2"));
 
+var offerCreated = false;
+var ready = false;
+
 // variables
+var Client_IDs = [];
 var roomNumber;
 var localStream;
-var remoteStream1;
-var remoteStream2;
 
 var configuration = { iceServers: [{
     urls: "stun:stun.services.mozilla.com",
@@ -31,9 +32,6 @@ var rtcPeerConnection = [];
 // var rtcPeerConnection[length]1 = new RTCPeerConnection[length](configuration);
 var streamConstraints = { audio: true, video: true };
 var isCaller;
-var cur = 0;
-var count = 0;
-var mixer;
 
 // Let's do this
 var socket = io();
@@ -49,6 +47,11 @@ btnGoRoom.onclick = function () {
         socket.emit('create or join', roomNumber);
         divSelectRoom.style = "display: none;";
         divConsultingRoom.style = "display: block;";
+    }
+    var i = 0;
+    while (i<6) {
+        remoteVideo.push(document.querySelector("#remoteVideo"+i));
+        i++;
     }
 };
 
@@ -77,6 +80,7 @@ socket.on('joined', function (room) {
             id: socketId
         }
         );
+        ready = true;
     }).catch(function (err) {
         console.log('An error ocurred when accessing media devices', err);
     });
@@ -91,57 +95,123 @@ socket.on('message', function(message) {
 
 
 socket.on('candidate', function (event) {
-    var candidate = new RTCIceCandidate({
-        sdpMLineIndex: event.label,
-        candidate: event.candidate
-    });
-    rtcPeerConnection[length].addIceCandidate(candidate);
+    if(!Client_IDs.includes(event.from)){
+
+        Client_IDs.push(event.from);
+        var candidate = new RTCIceCandidate({
+            sdpMLineIndex: event.label,
+            candidate: event.candidate
+        });
+        rtcPeerConnection[length].addIceCandidate(candidate);
+        console.log("recieved candidate from: jjj "+event.from);
+    }
+    
     
 });
 
 socket.on('ready', function (event) {
+    offerCreated = true;
     console.log("Ready Here: "+event.id+" "+socketId);
-    if (isCaller) {
-        console.log("Creating Offer ");
-        length = rtcPeerConnection.length;
-        rtcPeerConnection.push(new RTCPeerConnection(configuration));
-        rtcPeerConnection[length].onicecandidate = onIceCandidate;
-        rtcPeerConnection[length].ontrack = onAddStream;    
-        rtcPeerConnection[length].addTrack(localStream.getTracks()[0], localStream);
-        rtcPeerConnection[length].addTrack(localStream.getTracks()[1], localStream);
-        rtcPeerConnection[length].createOffer()
-            .then(sessionDescription => {
-                rtcPeerConnection[length].setLocalDescription(sessionDescription);
-                socket.emit('offer', {
-                    type: 'offer',
-                    sdp: sessionDescription,
-                    room: roomNumber,
-                    id: socketId
-                });
-            })
-            .catch(error => {
-                console.log(error)
-            });
+    document.querySelector("#create_offer").style.visibility = "visible";
 
-        console.log(rtcPeerConnection[length]); 
-        sendMessage('answer');
-    }
+    // document.querySelector("#create_offer").addEventListener("click", function(){
+        if (event.id!=socketId) {
+            
+            var temp = event.id;
+            console.log("Creating Offer ");
+            length = rtcPeerConnection.length;
+            rtcPeerConnection.push(new RTCPeerConnection(configuration));
+            rtcPeerConnection[length].onicecandidate = function(event, t = temp) {
+                if (event.candidate) {
+                    console.log('sending ice candidate');
+                    socket.emit('candidate', {
+                        type: 'candidate',
+                        label: event.candidate.sdpMLineIndex,
+                        id: event.candidate.sdpMid,
+                        candidate: event.candidate.candidate,
+                        room: roomNumber,
+                        from: socketId,
+                        to: t
+                    })
+            
+                console.log('to: ttttt '+temp);
+                }
+            };
+
+            rtcPeerConnection[length].ontrack = function (event, t = temp) {
+                // while(Client_IDs.indexOf(t) === -1);
+                remoteVideo[length].srcObject = event.streams[0];
+                console.log('got user media');
+                console.log(rtcPeerConnection);
+                console.log(remoteVideo);    
+            };    
+            rtcPeerConnection[length].addTrack(localStream.getTracks()[0], localStream);
+            rtcPeerConnection[length].addTrack(localStream.getTracks()[1], localStream);
+            rtcPeerConnection[length].createOffer()
+                .then(sessionDescription => {
+                    rtcPeerConnection[length].setLocalDescription(sessionDescription);
+                    socket.emit('offer', {
+                        type: 'offer',
+                        sdp: sessionDescription,
+                        room: roomNumber,
+                        id: socketId
+                    });
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+            
+            console.log(rtcPeerConnection[length]); 
+            sendMessage('answer');
+            document.querySelector("#create_offer").style.visibility = "hidden";
+        }
+    // });
 });
 
 socket.on('offer', function (event) {
+    ready = false;
     console.log("Offer Here: "+event.id+" "+socketId);
     console.log("Creating Answer ");
     if (!isCaller) {
+        if(!Client_IDs.includes(event.id)){
+
+            Client_IDs.push(event.id);
+        }
+        var temp = event.id;
         length = rtcPeerConnection.length;
         rtcPeerConnection.push(new RTCPeerConnection(configuration));
-        rtcPeerConnection[length].onicecandidate = onIceCandidate;
-        rtcPeerConnection[length].ontrack = onAddStream;
-        rtcPeerConnection[length].addTrack(localStream.getTracks()[0], localStream);
-        rtcPeerConnection[length].addTrack(localStream.getTracks()[1], localStream);
-        rtcPeerConnection[length].setRemoteDescription(new RTCSessionDescription(event.sdp));
-        rtcPeerConnection[length].createAnswer()
+
+        rtcPeerConnection[length].onicecandidate = function(event, t = temp) {
+            if (event.candidate) {
+                console.log('sending ice candidate');
+                socket.emit('candidate', {
+                    type: 'candidate',
+                    label: event.candidate.sdpMLineIndex,
+                    id: event.candidate.sdpMid,
+                    candidate: event.candidate.candidate,
+                    room: roomNumber,
+                    from: socketId,
+                    to: t
+                })
+        
+            console.log('to: ttttt '+temp);
+            }
+        };
+
+        var ind = Client_IDs.indexOf(event.id);
+
+        rtcPeerConnection[ind].ontrack = function(event, t = ind) {
+            remoteVideo[t].srcObject = event.streams[0];
+            console.log('got user media');
+            console.log(rtcPeerConnection);
+            console.log(remoteVideo);    
+        };
+        rtcPeerConnection[ind].addTrack(localStream.getTracks()[0], localStream);
+        rtcPeerConnection[ind].addTrack(localStream.getTracks()[1], localStream);
+        rtcPeerConnection[ind].setRemoteDescription(new RTCSessionDescription(event.sdp));
+        rtcPeerConnection[ind].createAnswer()
             .then(sessionDescription => {
-                rtcPeerConnection[length].setLocalDescription(sessionDescription);
+                rtcPeerConnection[ind].setLocalDescription(sessionDescription);
                 socket.emit('answer', {
                     type: 'answer',
                     sdp: sessionDescription,
@@ -153,17 +223,18 @@ socket.on('offer', function (event) {
                 console.log(error)
             })
             console.log('Offer Recieved');
-
-        flag = 1;
-        console.log(rtcPeerConnection[length]); 
+        console.log(rtcPeerConnection); 
+        console.log(Client_IDs); 
         console.log('Sending Answer');
     }
 });
 
 socket.on('answer', function (event) {
+    offerCreated = false;
     console.log('Answer Recieved '+length);
     rtcPeerConnection[length].setRemoteDescription(new RTCSessionDescription(event.sdp));
-    flag = 1;
+    console.log(rtcPeerConnection);
+    console.log(remoteVideo);
 })
 
 // handler functions
@@ -175,7 +246,8 @@ function onIceCandidate(event) {
             label: event.candidate.sdpMLineIndex,
             id: event.candidate.sdpMid,
             candidate: event.candidate.candidate,
-            room: roomNumber
+            room: roomNumber,
+            from: socketId
         })
 
     sendMessage('sentIcecadidate');
@@ -183,12 +255,10 @@ function onIceCandidate(event) {
 }
 
 function onAddStream(event) {
-    var temp = remoteVideo.length;
-    if(length<=temp){
-        remoteVideo.push(document.querySelector("#remoteVideo"+length));
-        remoteVideo[length].srcObject = event.streams[0];
-        console.log('got user media');
-    }
+    remoteVideo[0].srcObject = event.streams[0];
+    console.log('got user media');
+    console.log(rtcPeerConnection);
+    console.log(remoteVideo);    
 }
 
 function sendMessage(message) {

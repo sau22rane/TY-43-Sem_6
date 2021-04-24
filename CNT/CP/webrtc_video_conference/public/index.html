@@ -12,11 +12,17 @@
     </div>
 
     <div id="consultingRoom" style="display:none">
-        <video id="localVideo" autoplay></video>
-        <video id="remoteVideo0" autoplay></video><br>
-        <video id="remoteVideo1" autoplay></video><br>
-        <video id="remoteVideo2" autoplay></video><br>
-        <video id="remoteVideo3" autoplay></video>
+        <video id="localVideo" autoplay style="height: 300px; width: 300px;"></video>
+        <video id="remoteVideo0" autoplay style="height: 300px; width: 300px;"></video><hr>
+        <video id="remoteVideo1" autoplay style="height: 300px; width: 300px;"></video>
+        <video id="remoteVideo2" autoplay style="height: 300px; width: 300px;"></video><hr>
+        <video id="remoteVideo3" autoplay style="height: 300px; width: 300px;"></video>
+        <video id="remoteVideo4" autoplay style="height: 300px; width: 300px;"></video><hr>
+        <video id="remoteVideo5" autoplay style="height: 300px; width: 300px;"></video>
+    </div>
+    <div>
+        <button id="create_ans" style="visibility: hidden;">Create Answer</button>
+        <button id="create_offer" style="visibility: hidden;">Create Offer</button>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
