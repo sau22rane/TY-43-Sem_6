@@ -68,6 +68,10 @@ io.on('connection', function (socket) {
         //io.to(new_client).emit('answer',event.sdp,numClients);
     });
 
+    socket.on('end_connection', function(event){
+        socket.broadcast.to(event.rn).emit('end_connection', event);
+    })
+
 });
 
 // listener
