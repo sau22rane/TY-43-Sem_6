@@ -38,7 +38,6 @@ var configuration = { iceServers: [{
 };
 
 var rtcPeerConnection = [];
-// var rtcPeerConnection[length]1 = new RTCPeerConnection[length](configuration);
 var streamConstraints = { audio: true, video: true };
 var isCaller;
 
@@ -158,11 +157,7 @@ function startUp() {
     socket.emit('create or join', roomNumber);
     userName = String(localStorage.getItem('username'));
     console.log(userName);
-    // var i = 0;
-    // while (i<6) {
-    //     remoteVideo.push(document.querySelector("#remoteVideo"+i));
-    //     i++;
-    // }
+    
 };
 
 // message handlers
@@ -202,9 +197,6 @@ socket.on('joined', function (room) {
     socketId = socket.id;
     console.log("joined "+socketId);
 
-    // remoteVideo.push(document.querySelector("#remote-video"));
-    // remoteVideoText.push(document.querySelector("#remote-video-text"));
-
 });
 
 socket.on('message', function(event) {
@@ -234,12 +226,11 @@ socket.on('end_connection', function(event) {
     rtcPeerConnection[indx].close();
     document.querySelector("#"+remoteVideo[indx].id+"div").remove();
     console.log("#"+remoteVideo[indx].id+"div");
-    // remoteVideoText[indx].remove();
+    
     Client_IDs.splice(indx, 1);
     Client_Uname.splice(indx, 1);
     rtcPeerConnection.splice(indx, 1);
     remoteVideo.splice(indx, 1);
-    // remoteVideoText.splice(indx, 1);
 
     Dish();
     updateParticipants()
@@ -265,9 +256,6 @@ socket.on('candidate', function (event) {
 
 socket.on('ready', function (event) {
     console.log("Ready Here: "+event.id+" "+socketId+" "+event.username);
-
-    // remoteVideo.push(document.querySelector("#remote-video"));
-    // remoteVideoText.push(document.querySelector("#remote-video-text"));
 
         if (event.id!=socketId) {
             
@@ -304,7 +292,7 @@ socket.on('ready', function (event) {
             };
 
             rtcPeerConnection[length].ontrack = function (event, t = temp) {
-                // while(Client_IDs.indexOf(t) === -1);
+                
                 remoteVideo[length].srcObject = event.streams[0];
                 console.log('got user media');
             };    
@@ -427,20 +415,6 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 function toggleChat() {
-    /* var chatText = $("#chat-text");
-    if (entireChat.is(":visible")) {
-      entireChat.fadeOut();
-      // Update show chat buttton
-      chatText.text("Show Chat");
-      chatIcon.classList.remove("fa-comment-slash");
-      chatIcon.classList.add("fa-comment");
-    } else {
-      entireChat.fadeIn();
-      // Update show chat buttton
-      chatText.text("Hide Chat");
-      chatIcon.classList.remove("fa-comment");
-      chatIcon.classList.add("fa-comment-slash");
-    } */
     var state = document.querySelector("#entire-chat").style.visibility;
     console.log(state);
     if(state === "hidden"){
