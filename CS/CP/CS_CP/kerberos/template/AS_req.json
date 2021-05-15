@@ -1,0 +1,5 @@
+{
+    "name": "<client name>",
+    "server": "<TGS>",
+    "Nonce": "<nonce value>"
+}
