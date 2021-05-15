@@ -38,14 +38,14 @@ function exp(num, index, mod){
 }
 
 function inv(num, phi){
-    var a = num, m = phi, m0 = m;
+    var a = num, m = phi, m0 = phi;
     var y = 0, x = 1;
  
     if (m == 1)
         return 0;
  
     while (a > 1) {
-        var q = a / m;
+        var q = Math.floor(a / m);
         var t = m;
         m = a % m, a = t;
         t = y;

@@ -54,9 +54,44 @@ function Encrypt(json_data, key1, key2, aes_key){
 
 function Decrypt(enc_data, key1, key2){
     var aes_key = Decrypt_Key(enc_data.enc_key, key1, key2);
+    console.log(aes_key);
     return Decrypt_JSON(enc_data.enc_data, aes_key);
 }
 
+function isPrime(num){
+    for(var i = 2; i<(num); i++){
+        if(num%i === 0)
+            return false;
+    }
+    return true;
+}
+
+function Key_init(){
+    var p = 181, q = 179, phi, e, d, n;
+    
+    phi = (p-1) * (q-1);
+    n = p * q;
+
+    do{
+        e = Math.floor(Math.random() * 100) + 100;
+    }
+    while(GCD( phi, e) != 1 || e===p || e===q);
+
+    d = inv(e, phi);
+
+    console.log(e+" "+d);
+    return{
+        public_key: {
+            exp: e,
+            n: n
+        },
+        private_key: {
+            exp: d,
+            n: n
+        },
+        AES: Math.floor(Math.random() * 10000)
+    }
+}
 
 
 var data = '{ "name": "Rane", "id": "11810752", "stream": "CS"}';
@@ -64,34 +99,13 @@ var obj = JSON.parse(data);
 
 console.log(obj);
 
-// p = 193, q = 223
+var RSA_KEYS1 = Key_init();
+var RSA_KEYS2 = Key_init();
 
-var RSA_KEYS1 = {
-    public_key: {
-        exp: 107,
-        n: 43039
-    },
-    private_key: {
-        exp: 30275,
-        n: 43039
-    }
-}
-
-var RSA_KEYS2 = {
-    public_key: {
-        exp: 113,
-        n: 43039
-    },
-    private_key: {
-        exp: 20369,
-        n: 43039
-    }
-}
+console.log(RSA_KEYS1);
+console.log(RSA_KEYS2);
 
 var aes_key = 19189;
-
-// var e = Encrypt_Key(aes_key, RSA_KEYS1.private_key, RSA_KEYS2.public_key);
-// var d = Decrypt_Key(e, RSA_KEYS1.public_key, RSA_KEYS2.private_key)
 
 var e = Encrypt(obj, RSA_KEYS1.private_key, RSA_KEYS2.public_key, aes_key);
 var d = Decrypt(e, RSA_KEYS1.public_key, RSA_KEYS2.private_key);
