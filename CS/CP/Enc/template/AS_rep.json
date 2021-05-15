@@ -1,0 +1,8 @@
+{
+    "TGS_key": "<TGS_public_key>",
+    "Timestamp": "<Timestamp>",
+    "Lifetime": "<Lifetime>",
+    "Server": "TGS",
+    "enc_TGT": "<enc_TGT>",
+    "Nonce": "<nonce>"
+}

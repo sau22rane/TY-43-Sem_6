@@ -1,0 +1,8 @@
+{
+    "Server_key": "<Server_public_key>",
+    "Timestamp": "<Timestamp>",
+    "Lifetime": "<Lifetime>",
+    "Server": "<Server>",
+    "enc_sess_ticket": "<enc_sess_ticket>",
+    "Nonce": "<nonce>"
+}
