@@ -8,21 +8,44 @@ var irreducible = 0b10011;
 var Me = [[1,4],[4,1]];
 var InvMe = [[9,2],[2,9]];
 
-function SubNib( num){
+function SubNib(num, n){
     var i = 0, res = 0;
-    while ((num>> i*4) !=0){
-        res|= (S_BOX[((num & (15<<i*4))>>i*4)]<<i*4);
-        i++;
+    while (i<n){
+        res|= (S_BOX[((num & (15<<i))>>i)]<<i);
+        i+=4;
     }
+
+    // if((num>> 2*4) !=0){
+    //     res|= (S_BOX[((num & (15<<0*4))>>0*4)]<<0*4);
+    //     res|= (S_BOX[((num & (15<<1*4))>>1*4)]<<1*4);
+    // }
+    // else{
+    //     res|= (S_BOX[((num & (15<<0*4))>>0*4)]<<0*4);
+    //     res|= (S_BOX[((num & (15<<1*4))>>1*4)]<<1*4);
+    //     res|= (S_BOX[((num & (15<<2*4))>>2*4)]<<2*4);
+    //     res|= (S_BOX[((num & (15<<3*4))>>3*4)]<<3*4);
+    
+    // }
+
     return res;
 };
 
-function InvSubNib( num){
+function InvSubNib( num, n){
     var i = 0, res = 0;
-    while ((num>> i*4) !=0){
-        res|= (S_BOX_INV[((num & (15<<i*4))>>i*4)]<<i*4);
-        i++;
+    while (i<n){
+        res|= (S_BOX_INV[((num & (15<<i))>>i)]<<i);
+        i+=4;
     }
+    // if((num>> 2*4) !=0){
+    //     res|= (S_BOX_INV[((num & (15<<0*4))>>0*4)]<<0*4);
+    //     res|= (S_BOX_INV[((num & (15<<1*4))>>1*4)]<<1*4);
+    // }
+    // else{
+    //     res|= (S_BOX_INV[((num & (15<<0*4))>>0*4)]<<0*4);
+    //     res|= (S_BOX_INV[((num & (15<<1*4))>>1*4)]<<1*4);
+    //     res|= (S_BOX_INV[((num & (15<<2*4))>>2*4)]<<2*4);
+    //     res|= (S_BOX_INV[((num & (15<<3*4))>>3*4)]<<3*4);
+    // }
     return res;
 }
 function RotNib( num){
@@ -75,7 +98,7 @@ function Encrypt_AES(data){
     // console.log("----Debugging Encrypt----");
     var ARK1 = (data ^ K1);
     // binary(ARK1, 16);
-    var subNib = SubNib(ARK1);
+    var subNib = SubNib(ARK1, 16);
     // binary(subNib, 16);
     var shiftRow = RowShift(subNib);
     // binary(shiftRow, 16);
@@ -93,7 +116,7 @@ function Encrypt_AES(data){
     // binary(mixColn, 16);
     var ARK2 = (mixColn^K2);
     // binary(ARK2, 16);
-    var subNib2 = SubNib(ARK2);
+    var subNib2 = SubNib(ARK2, 16);
     // binary(subNib2, 16);
     var shiftRow2 = RowShift(subNib2);
 
@@ -106,7 +129,7 @@ function Encrypt_AES(data){
 function Decrypt_AES(data){
     var ARK3 = (data^K3);
     var shiftRow2 = RowShift(ARK3);
-    var subNib2 = InvSubNib(shiftRow2);
+    var subNib2 = InvSubNib(shiftRow2, 16);
     var ARK2 = (subNib2^K2);
 
     var mat= [[0,0],[0,0]];
@@ -120,7 +143,7 @@ function Decrypt_AES(data){
 
     var mixColn = MixCol(S_mat);
     var shiftRow1 = RowShift(mixColn);
-    var subNib1 = InvSubNib(shiftRow1);
+    var subNib1 = InvSubNib(shiftRow1, 16);
     var ARK1 = (subNib1^K1);
     return ARK1;
 }
@@ -148,9 +171,9 @@ function binary(num, n){
 function KeyGenerate(){
     W0 = (key >> 8);
     W1 = (key & 0xFF);
-    W2 = (W0 ^ 0x80 ^ SubNib(RotNib(W1)) );
+    W2 = (W0 ^ 0x80 ^ SubNib(RotNib(W1), 8) );
     W3 = (W2 ^ W1);
-    W4 = (W2 ^ 0x30 ^ SubNib(RotNib(W3)) );
+    W4 = (W2 ^ 0x30 ^ SubNib(RotNib(W3), 8) );
     W5 = (W4 ^ W3);
     // console.log("W0:\t");
     // binary(W0, 8);
@@ -186,6 +209,7 @@ function binary_debug(num, n){
     }
     console.log(t);
 }
+
 exports.init = init;
 exports.KeyGenerate = KeyGenerate;
 exports.Encrypt_AES = Encrypt_AES;

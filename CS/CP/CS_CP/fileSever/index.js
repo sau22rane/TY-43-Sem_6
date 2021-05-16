@@ -8,6 +8,11 @@ console.log("\npublic key-4 : "+JSON.stringify(keys4.public_key) );
 const currentDate = new Date();
 
 const app = express();
+
+var cors = require('cors');
+
+app.use(cors());
+
 const PORT = 3000;
 app.use(bodyParser.json());
 let publicKey3 ="publicKey3";

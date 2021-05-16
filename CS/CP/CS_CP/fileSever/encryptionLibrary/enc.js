@@ -18,7 +18,7 @@ function Encrypt_JSON(json_data, key){
     for (var i = 0; i < enc_word.length; i++)
         msg+= String.fromCharCode(enc_word[i]);
     // console.log(msg);
-    return msg;
+    return enc_word;
 }
 
 function Decrypt_JSON(encoded, key){
@@ -29,7 +29,8 @@ function Decrypt_JSON(encoded, key){
     var charCode;
 
     for (var i = 0; i < encoded.length; ++i){
-        charCode = encoded.charCodeAt(i);
+        // charCode = encoded.charCodeAt(i);
+        charCode = encoded[i];
         de_word.push(aes.Decrypt_AES(charCode));
     }
 
@@ -83,7 +84,7 @@ function Key_init(){
     d = rsa.inv(e, phi);
 
     console.log(e+" "+d);
-    return{
+    var key = {
         public_key: {
             exp: e,
             n: n
@@ -94,27 +95,30 @@ function Key_init(){
         },
         AES: Math.floor(Math.random() * 10000)
     }
+    console.log(key);
+    return key;
 }
 
 
-var data = '{ "name": "Rane", "id": "11810752", "stream": "CS"}';
-var obj = JSON.parse(data);
+// var data = '{ "name": "Rane", "id": "11810752", "stream": "CS"}';
+// var obj = JSON.parse(data);
 
-console.log(obj);
+// console.log(obj);
 
-var RSA_KEYS1 = Key_init();
-var RSA_KEYS2 = Key_init();
+// var RSA_KEYS1 = Key_init();
+// var RSA_KEYS2 = Key_init();
 
-console.log(RSA_KEYS1);
-console.log(RSA_KEYS2);
+// console.log(RSA_KEYS1);
+// console.log(RSA_KEYS2);
 
-var aes_key = 19189;
+// var aes_key = 19189;
 
-var e = Encrypt(obj, RSA_KEYS1.private_key, RSA_KEYS2.public_key, aes_key);
-var d = Decrypt(e, RSA_KEYS1.public_key, RSA_KEYS2.private_key);
+// var e = Encrypt(obj, RSA_KEYS1.private_key, RSA_KEYS2.public_key, aes_key);
+// var d = Decrypt(e, RSA_KEYS1.public_key, RSA_KEYS2.private_key);
 
-console.log("e : "+JSON.stringify(e) );
-console.log("d : "+d);
+// console.log("e : "+JSON.stringify(e) );
+// console.log("d : "+d);
+
 exports.Key_init = Key_init;
 exports.Decrypt = Decrypt;
 exports.Encrypt = Encrypt;
