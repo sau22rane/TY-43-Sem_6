@@ -9,7 +9,7 @@ const currentDate = new Date();
 
 const router = express.Router();
 const records =[];
-var users = {"mitanshu" : 119};
+var users = [];
 function fetchUrl(url)  
 {  
     const http = new XMLHttpRequest()
@@ -24,20 +24,25 @@ setTimeout(fetchUrl,1600);
 
 function createTGT(data){
     const timestamp = currentDate.getTime();
+    var foundValue = users.filter(obj=>obj.name===data.name);
     const tempTGT = {
-        "client_key": users[data.name],
-        "name": data.name,
-        "Lifetime": timestamp+1000000
+        client_key: foundValue[0].name,
+        name: data.name,
+        Lifetime: timestamp+1000000
     };
     return enc.Encrypt( tempTGT , keys2.private_key , publicKey3 , 19189 );
 }
 
 router.post('/register',(req,res) => {
-    console.log('post working');
+    console.log(req.body);
     const data = req.body;
-    users[data.name] = data.publicKey;
-
-    res.send(users);
+    var foundValue = users.filter(obj=>obj.name===data.name);
+    if(foundValue.length===0){
+        users.push(data);
+        res.send(users);
+    }
+    else
+        res.send("User already exists..!!!");
 
 });
 
@@ -46,12 +51,12 @@ router.post('/getTGT',(req,res) => {
     const timestamp = currentDate.getTime();
 
     const response = {
-    "TGS_key": publicKey3,
-    "Timestamp": timestamp,
-    "Lifetime": timestamp+1000000,
-    "Server": "SSERVER_TGS",
-    "enc_TGT": TGT,
-    "Nonce": req.body.Nonce
+    TGS_key: publicKey3,
+    Timestamp: timestamp,
+    Lifetime: timestamp+1000000,
+    Server: "SSERVER_TGS",
+    enc_TGT: TGT,
+    Nonce: req.body.Nonce
     };
     res.send(response);
 
