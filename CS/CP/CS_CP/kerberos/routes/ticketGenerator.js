@@ -26,8 +26,8 @@ function fetchUrl1(url)
     http1.open("GET", "http://localhost:3000/getpublicKey" )
     http1.send()
     http1.onload = () => {
-        console.log("\npublic key-4 : "+JSON.stringify(JSON.parse(http.responseText)) );
-        publicKey4 = JSON.parse(http.responseText);
+        console.log("\npublic key-4 : "+JSON.stringify(JSON.parse(http1.responseText)) );
+        publicKey4 = JSON.parse(http1.responseText);
     }
 
 }

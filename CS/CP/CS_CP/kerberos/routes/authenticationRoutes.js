@@ -10,7 +10,6 @@ const currentDate = new Date();
 const router = express.Router();
 const records =[];
 var users = {"mitanshu" : 119};
-// p = 119 , 11039
 function fetchUrl(url)  
 {  
     const http = new XMLHttpRequest()
@@ -19,7 +18,7 @@ function fetchUrl(url)
     http.onload = () => {
         console.log("\npublic key-3  : "+JSON.stringify(JSON.parse(http.responseText)) );
         publicKey3 = { "exp" : JSON.parse(http.responseText).exp , "n": JSON.parse(http.responseText).n };
-    };    
+    };   
 }
 setTimeout(fetchUrl,1600);
 
