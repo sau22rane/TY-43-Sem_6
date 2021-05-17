@@ -12,8 +12,6 @@ const keys4 = enc.Key_init();
 console.log("\npublic key-4 : "+JSON.stringify(keys4.public_key) );
 const currentDate = new Date();
 
-<<<<<<< HEAD
-=======
 const app = express();
 const app1 = express();
 var http = require('http').Server(app1);
@@ -22,7 +20,6 @@ var io = require('socket.io')(http);
 var cors = require('cors');
 app.use(cors());
 app1.use(cors());
->>>>>>> d72613fa1f4cd899cc862367093ba882f1f07c5f
 
 const PORT = 3000;
 const PORT1 = 5050;
@@ -60,7 +57,6 @@ app.post('/accessServer',(req,res) => {
    
 });
 
-<<<<<<< HEAD
 function checkPacket(req)
 {
     decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.clientPublicKey );    
@@ -78,7 +74,6 @@ function checksessionTicket(decryptedPacket)
 }
 
 app.listen(PORT,() => console.log(`File Server runinng on port : http://localhost:${PORT}`));
-=======
 app.get('/fileServer/getFileList',(req,res) => {
     
     var files = fs.readdirSync('./public/data/');
@@ -101,4 +96,3 @@ app1.use(express.static('public'));
 http.listen(PORT1 || 8000, function () {
     console.log('listening on', PORT1);
 });
->>>>>>> d72613fa1f4cd899cc862367093ba882f1f07c5f
