@@ -15,7 +15,7 @@ function Encrypt_JSON(json_data, key){
     for (var i = 0; i < enc_word.length; i++)
         msg+= String.fromCharCode(enc_word[i]);
     // console.log(msg);
-    return msg;
+    return enc_word;
 }
 
 function Decrypt_JSON(encoded, key){
@@ -26,7 +26,8 @@ function Decrypt_JSON(encoded, key){
     var charCode;
 
     for (var i = 0; i < encoded.length; ++i){
-        charCode = encoded.charCodeAt(i);
+        // charCode = encoded.charCodeAt(i);
+        // charCode = encoded[i];
         de_word.push(Decrypt_AES(charCode));
     }
 
@@ -34,7 +35,7 @@ function Decrypt_JSON(encoded, key){
     for (var i = 0; i < de_word.length; i++)
         msg+= String.fromCharCode(de_word[i]);
     // console.log(msg);
-    return msg;
+    return JSON.parse(msg);
 }
 
 function Encrypt_Key(aes_key, key1, key2){

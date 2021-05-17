@@ -25,7 +25,7 @@ var cors = require('cors');
 app.use(cors());
 app1.use(cors());
 app2.use(cors());
-app
+
 app1.use(bodyParser.json());
 app.use(bodyParser.json());
 app1.use('/authentication',authenticationRoutes);

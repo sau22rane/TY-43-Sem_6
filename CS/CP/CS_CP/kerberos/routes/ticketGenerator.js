@@ -53,24 +53,29 @@ function createSessionTicket(data){
     // console.log("Encrypted sessionTicket : "+sessionTicket);
 }
 router.post('/getToken',( req,res )=> {
-    if(checkPacket(req.body))
-    {
+    
+        console.log("GET /getToken ===> "+ JSON.stringify(req.body));
+        decryptedTGT = enc.Decrypt( req.body.data  , keys3.private_key , req.body.clientPublicKey );
+        // if(possible) missing
+        console.log("decryptedTGT");
+        console.log(decryptedTGT);
         const sessionTicket = createSessionTicket(req.body);
         const timestamp = currentDate.getTime();
         const response = {
-            "Server_key": "<Server_public_key>",
+            "Server_key": publicKey4,
             "Timestamp": timestamp,
             "Lifetime": timestamp+1234567,
             "Server": "<Server>",
             "enc_sess_ticket": sessionTicket,
-            "Nonce": req.body.Nonce
+            "Nonce": req.body.nonce
         };
+
+        response = enc.Encrypt(response , keys3.private_key ,  req.body.clientPublicKey , 19189 );
+        response = { "data" : response , "TGS_key" : keys3.public_key };
+
+
         res.send(response);
-    }
-    else
-    {
-        res.send("INVALID CREDENTIAL!!!");
-    }
+    
 });
 
 

@@ -29,6 +29,7 @@ function openFile(event) {
         client_key = obj;
         return obj;
     };
+    
     reader.readAsText(input.files[0]);
 };
 
@@ -45,10 +46,13 @@ function download() {
 
 
 function begin(){
+    console.log("client_key" + client_key);
+    console.log(client_key);
+    
     var temp_url = "http://localhost:5000/authentication/register";
     var data = {
         name: "sau22rane",
-        publicKey: client_key.publicKey
+        publicKey: client_key.public_key
     };
     console.log("Registering User");
     post_req(temp_url, data);
@@ -57,24 +61,32 @@ function begin(){
     temp_url = "http://localhost:5000/authentication/getTGT"
     data = {
         name: "sau22rane",
-        clientPublicKey: client_key.publicKey,
+        clientPublicKey: client_key.public_key,
         server: "TGS",
         nonce: 3
     }
     console.log("Requesting AS (Sending AS_req)")
     post_req(temp_url, data);
+    console.log(resp_data.data);    
+    var packet = Decrypt(resp_data.data  , client_key.private_key , resp_data.AS_key ) ;
+    console.log("DECRPTED PACKET IS  :  ");
+    console.log(packet);
+    console.log(packet.TGS_key)
+
     
     
     temp_url = "http://localhost:6001/ticketGeneration/getToken"
     data = {
         name: "sau22rane",
-        clientPublicKey: client_key.publicKey,
+        clientPublicKey: client_key.public_key,
         server: "B",
-        enc_TGT: resp_data.enc_TGT,
+        enc_TGT: packet.enc_TGT,
         nonce: 3
     }
-    
+    data  = Encrypt( data , client_key.private_key , packet.TGS_key , 19189 );
+    data = { "data": data , clientPublicKey: client_key.public_key };
     console.log("Requesting session Token (Sending TGS_req)")
     post_req(temp_url, data);
+
 }
 
