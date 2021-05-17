@@ -1,5 +1,5 @@
 var resp_data;
-var client_key;
+var client_token;
 function post_req(url, data){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
     xmlhttp.onreadystatechange = function($evt){
@@ -41,7 +41,7 @@ function openFile(event) {
         var obj = JSON.parse(text);
         node.innerText = JSON.stringify(obj);
         console.log(obj);
-        client_key = obj;
+        client_token = obj;
         return obj;
     };
     reader.readAsText(input.files[0]);
@@ -113,7 +113,42 @@ function createTable(data){
 }
 
 window.addEventListener("load", function(){
+    
+})
+
+function fetchData(){
     var temp_url = "http://localhost:3000/fileserver/getFileList";
     get_req(temp_url);
     createTable(resp_data);
-})
+}
+
+function verify(){
+    while(!accessServer());
+    fetchData();
+}
+
+function accessServer(){
+    temp_url = "http://localhost:3000/accessServer"
+    // data = {
+    //     name: "sau22rane",
+    //     clientPublicKey: client_key.public_key,
+    //     server: "B",
+    //     token: global_packet.enc_sess_ticket, 
+    //     nonce: 3
+    // }
+    // data  = Encrypt( data , client_key.private_key , global_packet.Server_public_key , 19189 );
+    // data = { "data": data , clientPublicKey: client_key.public_key , name: "sau22rane" };
+    // console.log("Requesting session Token (Sending TGS_req)");
+    post_req(String(temp_url), client_token);
+    if(resp_data.status == 200 )
+    {
+        console.log("I GOT PERMISSION TO FILE SERVER");
+        document.querySelector("a").href="";
+        document.querySelector("#credentials").remove();
+        return true;
+    }
+    else{
+        console.log("INVALID TOKEN");
+        return false;
+    }
+}

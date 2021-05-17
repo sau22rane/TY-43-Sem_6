@@ -2,6 +2,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>posting</title>
         <script src="script/aes.js"></script>
         <script src="script/rsa.js"></script>
@@ -9,5 +10,15 @@
         <script src="script/script.js"></script>
     </head>
     <body id="body" >
+        <div id="credentials">
+            <a href="http://localhost:8080">Don't have token? Generate Token.</a>
+            <br><br>
+            <label>Load File</label><br>
+            <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
+            <div id='output'>
+            ...
+            </div>
+            <button onclick="verify()">Submit</button>
+        </div>
     </body>
 </html>

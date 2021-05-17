@@ -12,13 +12,10 @@ const keys4 = enc.Key_init();
 console.log("\npublic key-4 : "+JSON.stringify(keys4.public_key) );
 const currentDate = new Date();
 
-const app = express();
 const app1 = express();
 var http = require('http').Server(app1);
 var io = require('socket.io')(http);
 
-var cors = require('cors');
-app.use(cors());
 app1.use(cors());
 
 const PORT = 3000;
@@ -73,7 +70,6 @@ function checksessionTicket(decryptedPacket)
     return false;
 }
 
-app.listen(PORT,() => console.log(`File Server runinng on port : http://localhost:${PORT}`));
 app.get('/fileServer/getFileList',(req,res) => {
     
     var files = fs.readdirSync('./public/data/');
