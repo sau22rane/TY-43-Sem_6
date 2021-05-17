@@ -129,5 +129,5 @@ function accessServer(){
     a.href = URL.createObjectURL(file);
     a.download = "Token.json";
     a.click();
-
+    location.replace("http://localhost:5050")
 }
