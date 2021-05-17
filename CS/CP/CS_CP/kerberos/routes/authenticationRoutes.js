@@ -10,6 +10,9 @@ let publicKey3 = "publucKey3";
 const records =[];
 var users = [];
 
+router.get('/getpublicKey',(req,res) => {
+    res.send(keys2.public_key);
+});
 
 router.post('/register',(req,res) => {
     console.log("GET /register ===> "+ JSON.stringify(req.body));
@@ -20,7 +23,7 @@ router.post('/register',(req,res) => {
         res.send(users);
     }
     else
-        res.send("User already exists..!!!");
+        res.send( {"status" : 200 } );
 
 });
 
@@ -40,13 +43,8 @@ router.post('/getTGT',(req,res) => {
 
     response = enc.Encrypt( packet , keys2.private_key , req.body.clientPublicKey , 19189 );
     response = { "data" : response, "AS_public_key" : keys2.public_key };
-
     res.send(response);
 
-});
-
-router.get('/getpublicKey',(req,res) => {
-    res.send(keys2.public_key);
 });
 
 function createTGT(data){
