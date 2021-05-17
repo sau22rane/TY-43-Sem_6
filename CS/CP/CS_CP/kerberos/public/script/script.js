@@ -122,13 +122,12 @@ function accessServer(){
     }
     data  = Encrypt( data , client_key.private_key , global_packet.Server_public_key , 19189 );
     data = { "data": data , clientPublicKey: client_key.public_key , name: "sau22rane" };
-    console.log("Requesting session Token (Sending TGS_req)");
-    post_req(String(temp_url), data);
-    if(resp_data.status == 200 )
-    {
-        console.log("I GOT PERMISSION TO FILE SERVER");
-    }
-    else{
-        console.log("INVALID TOKEN");
-    }
+    
+    var a = document.getElementById("a");
+    var data = JSON.stringify(data);
+    var file = new Blob([data], {type: "application/JSON;charset=utf-8"});
+    a.href = URL.createObjectURL(file);
+    a.download = "Token.json";
+    a.click();
+
 }
