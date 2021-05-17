@@ -1,0 +1,5 @@
+{
+    "clientPublicKey": "<client_key>",
+    "name": "<client_name>",
+    "lifetime": "<Lifetime>"
+}
