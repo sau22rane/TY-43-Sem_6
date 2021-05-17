@@ -17,31 +17,28 @@ const PORT = 3000;
 app.use(bodyParser.json());
 let publicKey3 ="publicKey3";
 
-function fetchUrl()  
-{  
-    const http = new XMLHttpRequest()
-    http.open("GET", "http://localhost:6001/ticketGeneration/getpublicKey")
-    http.send()
-    http.onload = () => {
-        console.log("\npublic key-3 : "+JSON.stringify(JSON.parse(http.responseText)) );
-        publicKey3 = JSON.parse(http.responseText);
-    };
-}
-setTimeout(fetchUrl,6000);
 
 function checkSessionTicket(data){
     decryptedSession = enc.Decrypt(data.enc_sess_ticket , keys4.private_key , publicKey3 )
     console.log("decryptedSession : "+ decryptedSession);
 }
-app.get('/getpublicKey',(req,res) => {
+app.post('/getpublicKey',(req,res) => {
 
+    publicKey3 = req.body.key;
+    console.log("\npublic key-3 : "+JSON.stringify(publicKey3) );
     res.send(keys4.public_key);
 
 });
 
-app.post('/fileServer/accessServer',(req,res) => {
+app.post('/accessServer',(req,res) => {
     
-    checkSessionTicket(req.body);
+    decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.clientPublicKey );
+    console.log(decryptedPacket)
+    
+    decryptedSessionTicket = enc.Decrypt( decryptedPacket.token , keys4.private_key , publicKey3 );
+    console.log("decryptedSessionTicket : ");
+    console.log(decryptedSessionTicket);
+
     res.send("session working");
 });
 

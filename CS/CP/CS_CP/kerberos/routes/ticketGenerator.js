@@ -22,14 +22,22 @@ function fetchUrl1(url)
         publicKey2 = JSON.parse(http.responseText);
     };    
 
-    const http1 = new XMLHttpRequest()
-    http1.open("GET", "http://localhost:3000/getpublicKey" )
-    http1.send()
-    http1.onload = () => {
-        console.log("\npublic key-4 : "+JSON.stringify(JSON.parse(http1.responseText)) );
-        publicKey4 = JSON.parse(http1.responseText);
-    }
+    post_req("http://localhost:3000/getpublicKey");
 
+}
+function post_req(url){
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    xmlhttp.onreadystatechange = function($evt){
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            // console.log(xmlhttp.responseText);
+            let res = JSON.parse(xmlhttp.responseText);
+            publicKey4 = res;
+            console.log("\npublic key-4 : "+JSON.stringify(publicKey4) );
+        }
+    }
+    xmlhttp.open("POST", url, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.send(JSON.stringify( { key : keys3.public_key } ));
 }
 
 setTimeout(fetchUrl1,800);
@@ -61,8 +69,8 @@ router.post('/getToken',( req,res )=> {
         console.log(decryptedTGT);
         const sessionTicket = createSessionTicket(req.body);
         const timestamp = currentDate.getTime();
-        const response = {
-            "Server_key": publicKey4,
+        var response = {
+            "Server_public_key": publicKey4,
             "Timestamp": timestamp,
             "Lifetime": timestamp+1234567,
             "Server": "<Server>",
@@ -71,7 +79,7 @@ router.post('/getToken',( req,res )=> {
         };
 
         response = enc.Encrypt(response , keys3.private_key ,  req.body.clientPublicKey , 19189 );
-        response = { "data" : response , "TGS_key" : keys3.public_key };
+        response = { "data" : response , "TGS_key" : keys3.public_key  };
 
 
         res.send(response);

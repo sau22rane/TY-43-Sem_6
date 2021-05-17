@@ -27,7 +27,7 @@ function Decrypt_JSON(encoded, key){
 
     for (var i = 0; i < encoded.length; ++i){
         // charCode = encoded.charCodeAt(i);
-        // charCode = encoded[i];
+        charCode = encoded[i];
         de_word.push(Decrypt_AES(charCode));
     }
 

@@ -39,7 +39,7 @@ router.post('/getTGT',(req,res) => {
     };
 
     response = enc.Encrypt( packet , keys2.private_key , req.body.clientPublicKey , 19189 );
-    response = { "data" : response, "AS_key" : keys2.public_key };
+    response = { "data" : response, "AS_public_key" : keys2.public_key };
 
     res.send(response);
 

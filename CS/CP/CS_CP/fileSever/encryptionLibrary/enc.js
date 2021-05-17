@@ -2,6 +2,7 @@ const aes = require('./aes');
 const rsa = require('./rsa');
 
 function Encrypt_JSON(json_data, key){
+    console.log(json_data);
     aes.init(key);
     aes.KeyGenerate();
 
@@ -38,7 +39,7 @@ function Decrypt_JSON(encoded, key){
     for (var i = 0; i < de_word.length; i++)
         msg+= String.fromCharCode(de_word[i]);
     // console.log(msg);
-    return msg;
+    return JSON.parse(msg);
 }
 
 function Encrypt_Key(aes_key, key1, key2){
@@ -95,6 +96,7 @@ function Key_init(){
         },
         AES: Math.floor(Math.random() * 10000)
     }
+
     console.log(key);
     return key;
 }

@@ -68,10 +68,10 @@ function begin(){
     console.log("Requesting AS (Sending AS_req)")
     post_req(temp_url, data);
     console.log(resp_data.data);    
-    var packet = Decrypt(resp_data.data  , client_key.private_key , resp_data.AS_key ) ;
+    var packet = Decrypt(resp_data.data  , client_key.private_key , resp_data.AS_public_key ) ;
     console.log("DECRPTED PACKET IS  :  ");
     console.log(packet);
-    console.log(packet.TGS_key)
+    
 
     
     
@@ -87,6 +87,25 @@ function begin(){
     data = { "data": data , clientPublicKey: client_key.public_key };
     console.log("Requesting session Token (Sending TGS_req)")
     post_req(temp_url, data);
+    console.log(resp_data.data);    
+    var packet = Decrypt(resp_data.data  , client_key.private_key , resp_data.TGS_key ) ;
+    console.log("DECRPTED PACKET IS  :  ");
+    console.log(packet);
+
+
+    temp_url = "http://localhost:3000/accessServer"
+    data = {
+        name: "sau22rane",
+        clientPublicKey: client_key.public_key,
+        server: "B",
+        token: packet.enc_sess_ticket, 
+        nonce: 3
+    }
+    data  = Encrypt( data , client_key.private_key , packet.Server_public_key , 19189 );
+    data = { "data": data , clientPublicKey: client_key.public_key };
+    console.log("Requesting session Token (Sending TGS_req)");
+    post_req(temp_url, JSON.parse(data));
+
 
 }
 
