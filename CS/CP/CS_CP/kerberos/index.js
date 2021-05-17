@@ -1,54 +1,73 @@
-//mongodb+srv://TY-43:<password>@cluster0.wyvaa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+var fs = require('fs');
+
 var express = require('express')
 var bodyParser = require('body-parser')
-var mongoose = require('mongoose')
-require('dotenv/config');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const enc = require('./encryptionLibrary/enc');
 
-const app3 = express();
-var http = require('http').Server(app3);
-var io = require('socket.io')(http);
-var authenticationRoutes = require('./routes/authenticationRoutes.js');
-var ticketGeneratorRoutes = require('./routes/ticketGenerator.js');
+const keys4 = enc.Key_init();
+console.log("\npublic key-4 : "+JSON.stringify(keys4.public_key) );
+const currentDate = new Date();
 
-
-let records = [];
-const app1 = express();
-const app2 = express();
 const app = express();
+const app1 = express();
+var http = require('http').Server(app1);
+var io = require('socket.io')(http);
 
-const PORT = 2000;
-const PORT1 = 5000;
-const PORT2 = 6001;
-const PORT3 = 8080;
 var cors = require('cors');
-
 app.use(cors());
 app1.use(cors());
-app2.use(cors());
 
-app1.use(bodyParser.json());
+const PORT = 3000;
+const PORT1 = 5050;
 app.use(bodyParser.json());
-app1.use('/authentication',authenticationRoutes);
+let publicKey3 ="publicKey3";
 
-app2.use(bodyParser.json());
-app2.use('/ticketGeneration',ticketGeneratorRoutes);
 
-app1.get('/',(req,res) => {
-    res.send("Authentication server running fine");
+function checkSessionTicket(data){
+    decryptedSession = enc.Decrypt(data.enc_sess_ticket , keys4.private_key , publicKey3 )
+    console.log("decryptedSession : "+ decryptedSession);
+}
+app.post('/getpublicKey',(req,res) => {
+
+    publicKey3 = req.body.key;
+    console.log("\npublic key-3 : "+JSON.stringify(publicKey3) );
+    res.send(keys4.public_key);
+
 });
-app2.get('/',(req,res) => {
-    res.send("Ticket Generating server running fine");
+
+app.post('/accessServer',(req,res) => {
+    
+    decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.clientPublicKey );
+    console.log(decryptedPacket)
+    
+    decryptedSessionTicket = enc.Decrypt( decryptedPacket.token , keys4.private_key , publicKey3 );
+    console.log("decryptedSessionTicket : ");
+    console.log(decryptedSessionTicket);
+
+    res.send("session working");
 });
 
-mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true },() => {
-    console.log("DB connected");
+app.get('/fileServer/getFileList',(req,res) => {
+    
+    var files = fs.readdirSync('./public/data/');
+    const response = [];
+    for (let file of files) {
+        const fileDetails = fs.statSync('./public/data/'+file);
+        response.push({name:file, size:fileDetails.size, last_modified: fileDetails.mtime});
+    }
+    res.send(response);
 });
-app1.listen(PORT1,() => console.log(`Server runinng on port : http://localhost:${PORT1}`));
-app2.listen(PORT2,() => console.log(`Server runinng on port : http://localhost:${PORT2}`));
-app.listen(PORT,() => console.log(`Server runinng on port : http://localhost:${PORT}`));
 
-app3.use(cors());
-app3.use(express.static('public'));
-http.listen(PORT3 || 8000, function () {
-    console.log('listening on', PORT3);
+app.get('/fileServer/getFile/:fname',(req,res) => {
+    res.download('./public/data/'+req.params.fname);
+});
+
+
+app.listen(PORT,() => console.log(`File Server runinng on port : http://localhost:${PORT}`));
+
+app1.use(express.static('public'));
+http.listen(PORT1 || 8000, function () {
+    console.log('listening on', PORT1);
 });
