@@ -32,8 +32,6 @@ var configuration = { iceServers: [{
     urls: "stun:stun.services.mozilla.com",
     username: "louis@mozilla.com", 
     credential: "webrtcdemo"
-}, {
-    urls: ["stun:stun.example.com", "stun:stun-1.example.com"]
 }]
 };
 
@@ -276,7 +274,7 @@ socket.on('ready', function (event) {
             var temp = event.id;
             console.log("Creating Offer ");
             length = rtcPeerConnection.length;
-            rtcPeerConnection.push(new RTCPeerConnection(configuration));
+            rtcPeerConnection.push(new RTCPeerConnection( ));
             rtcPeerConnection[length].onicecandidate = function(event, t = temp) {
                 if (event.candidate) {
                     console.log('sending ice candidate');
@@ -346,6 +344,7 @@ socket.on('offer', function (event) {
         rtcPeerConnection.push(new RTCPeerConnection(configuration));
 
         rtcPeerConnection[length].onicecandidate = function(event, t = temp) {
+            console.log(event.candidate);
             if (event.candidate) {
                 console.log('sending ice candidate');
                 socket.emit('candidate', {
@@ -484,7 +483,9 @@ window.onload = function() {
        if(xhr.readyState == 4 && xhr.status == 200){
            let res = JSON.parse(xhr.responseText);
            console.log("response: ",res["v"]);
-           configuration = [res["v"]];
+           console.log(configuration);
+           configuration.iceServers.push(res["v"].iceServers);
+           console.log(configuration);
            startUp();
        }
     }
