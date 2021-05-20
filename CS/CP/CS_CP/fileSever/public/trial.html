@@ -3099,70 +3099,64 @@ window.application = new Application();
 <script src="script/aes.js"></script>
 <script src="script/rsa.js"></script>
 <script src="script/enc.js"></script>
+<script src="script/script.js"></script>
+
+
 </head>
 <body>
-    <div id="credentials">
-        <a href="http://localhost:8080">Don't have token? Generate Token.</a>
-        <br><br>
-        <label>Load File</label><br>
-        <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
-        <div id='output'>
-        ...
-        </div>
-        <button onclick="verify()">Submit</button>
-    </div>
-    <div id="data_table">
-        <div id="Web_1920__1">
-            <div id="Group_5">
-                <svg class="Rectangle_13">
-                    <rect id="Rectangle_13" rx="0" ry="0" x="0" y="0" width="1927" height="1085">
-                    </rect>
-                </svg>
-                <svg class="Path_62" viewBox="0 -1365.222 1926.647 1085.09">
-                    <path id="Path_62" d="M 0 -1365.221801757813 L 1926.646850585938 -1363.09619140625 L 1917.947998046875 -280.1322021484375 L 0 -280.1322021484375 L 0 -1365.221801757813 Z">
-                    </path>
-                </svg>
-                <img id="Mask_Group_15" src="./images/Mask_Group_15.png" srcset="./images/Mask_Group_15.png 1x, ./images/Mask_Group_15@2x.png 2x">
-                    
-                </svg>
-                <img id="ID3D-hand" src="./images/ID3D-hand.png" srcset="./images/ID3D-hand.png 1x, ./images/ID3D-hand@2x.png 2x">
-                    
-                <div id="Table">
-                    <span>Table</span>
-                </div>
-                <svg class="Rectangle_14">
-                    <rect id="Rectangle_14" rx="0" ry="0" x="0" y="0" width="652" height="736">
-                    </rect>
-                </svg>
-                <svg class="Rectangle_15">
-                    <rect id="Rectangle_15" rx="0" ry="0" x="0" y="0" width="116" height="640">
-                    </rect>
-                </svg>
-                <svg class="Rectangle_16">
-                    <rect id="Rectangle_16" rx="0" ry="0" x="0" y="0" width="601" height="70">
-                    </rect>
-                </svg>
-                <div id="Sr_No">
-                    <span>Sr No.</span>
-                </div>
-                <div id="File_Name">
-                    <span>File Name</span>
-                </div>
-                <div id="Size">
-                    <span>Size</span>
-                </div>
-                <div id="Last_Modified">
-                    <span>Last Modified</span>
-                </div>
-                <svg class="Rectangle_17">
-                    <rect id="Rectangle_17" rx="0" ry="0" x="0" y="0" width="256" height="640">
-                    </rect>
-                </svg>
-                
-            </div>
-        </div>
-    </div>
-	
-    <script src="script/script.js"></script>
+
+
+	<div id="Web_1920__1">
+		<div id="Group_5">
+			<svg class="Rectangle_13">
+				<rect id="Rectangle_13" rx="0" ry="0" x="0" y="0" width="1927" height="1085">
+				</rect>
+			</svg>
+			<svg class="Path_62" viewBox="0 -1365.222 1926.647 1085.09">
+				<path id="Path_62" d="M 0 -1365.221801757813 L 1926.646850585938 -1363.09619140625 L 1917.947998046875 -280.1322021484375 L 0 -280.1322021484375 L 0 -1365.221801757813 Z">
+				</path>
+			</svg>
+			<img id="Mask_Group_15" src="./images/Mask_Group_15.png" srcset="./images/Mask_Group_15.png 1x, ./images/Mask_Group_15@2x.png 2x">
+				
+			</svg>
+			<img id="ID3D-hand" src="./images/ID3D-hand.png" srcset="./images/ID3D-hand.png 1x, ./images/ID3D-hand@2x.png 2x">
+				
+			<div id="Table">
+				<span>Table</span>
+			</div>
+			<svg class="Rectangle_14">
+				<rect id="Rectangle_14" rx="0" ry="0" x="0" y="0" width="652" height="736">
+				</rect>
+			</svg>
+			<svg class="Rectangle_15">
+				<rect id="Rectangle_15" rx="0" ry="0" x="0" y="0" width="116" height="640">
+				</rect>
+			</svg>
+			<svg class="Rectangle_16">
+				<rect id="Rectangle_16" rx="0" ry="0" x="0" y="0" width="601" height="70">
+				</rect>
+			</svg>
+			<div id="Sr_No">
+				<span>Sr No.</span>
+			</div>
+			<div id="File_Name">
+				<span>File Name</span>
+			</div>
+			<div id="Size">
+				<span>Size</span>
+			</div>
+			<div id="Last_Modified">
+				<span>Last Modified</span>
+			</div>
+			<svg class="Rectangle_17">
+				<rect id="Rectangle_17" rx="0" ry="0" x="0" y="0" width="256" height="640">
+				</rect>
+			</svg>
+			
+		</div>
+	</div>
+	<script>
+		fetchData();
+	</script>
 </body>
 </html>

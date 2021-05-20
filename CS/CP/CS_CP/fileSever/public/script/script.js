@@ -1,4 +1,5 @@
 var resp_data;
+var a;
 var client_token;
 function post_req(url, data){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
@@ -57,6 +58,50 @@ function download() {
     a.download = "Credentials.json";
     a.click();
 }
+
+
+function addElements(data){
+    var top= 355;
+    var parent=document.querySelector("#Group_5");
+
+    for(var i = 0; i < data.length; i++){
+        var div1 = document.createElement("div");
+        var div2 = document.createElement("div");
+        var div3 = document.createElement("div");
+        var div4 = document.createElement("div");
+        var span1 = document.createElement("span");
+        var span2 = document.createElement("span");
+        var span3 = document.createElement("span");
+        var span4 = document.createElement("span");
+        div1.classList.add("srno");
+        div1.style.top=(top+i*68)+"px";
+        div2.classList.add("fname");
+        div2.style.top=(top+i*68)+"px";
+        div3.classList.add("fsize");
+        div3.style.top=(top+i*68)+"px";
+        div4.classList.add("modified");
+        div4.style.top=(top+i*68)+"px";
+        span1.innerText=i+1;
+
+        var link = document.createElement('a');
+        link.text=data[i].name;
+        link.style.color="rgb(62, 62, 62)";
+        link.href='http://localhost:3000/fileserver/getFile/'+link.text;
+
+        span2.appendChild(link);
+        span3.innerText=data[i].size;
+        span4.innerText=data[i].last_modified;
+        div1.appendChild(span1);
+        parent.appendChild(div1);
+        div2.appendChild(span2);
+        parent.appendChild(div2);
+        div3.appendChild(span3);
+        parent.appendChild(div3);
+        div4.appendChild(span4);
+        parent.appendChild(div4);
+    }
+}
+
 
 function createTable(data){
     var body = document.body,
@@ -119,7 +164,7 @@ window.addEventListener("load", function(){
 function fetchData(){
     var temp_url = "http://localhost:3000/fileserver/getFileList";
     get_req(temp_url);
-    createTable(resp_data);
+    addElements(resp_data);
 }
 
 function verify(){
@@ -145,6 +190,7 @@ function accessServer(){
         console.log("I GOT PERMISSION TO FILE SERVER");
         document.querySelector("a").href="";
         document.querySelector("#credentials").remove();
+        document.body.appendChild(a);
         return true;
     }
     else{
@@ -152,3 +198,10 @@ function accessServer(){
         return false;
     }
 }
+
+function startUI(){
+    a= document.getElementById("data_table");
+    document.getElementById("data_table").remove();
+}
+
+startUI()
