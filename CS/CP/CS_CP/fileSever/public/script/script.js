@@ -1,5 +1,5 @@
 var resp_data;
-var a;
+var file_table;
 var client_token;
 function post_req(url, data){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
@@ -38,9 +38,9 @@ function openFile(event) {
     var reader = new FileReader();
     reader.onload = function(){
         var text = reader.result;
-        var node = document.getElementById('output');
+        // var node = document.getElementById('Rectangle_3_p');
         var obj = JSON.parse(text);
-        node.innerText = JSON.stringify(obj);
+        // node.innerText = JSON.stringify(obj);
         console.log(obj);
         client_token = obj;
         return obj;
@@ -169,7 +169,6 @@ function fetchData(){
 
 function verify(){
     while(!accessServer());
-    fetchData();
 }
 
 function accessServer(){
@@ -189,8 +188,9 @@ function accessServer(){
     {
         console.log("I GOT PERMISSION TO FILE SERVER");
         document.querySelector("a").href="";
-        document.querySelector("#credentials").remove();
-        document.body.appendChild(a);
+        // document.querySelector("#credentials").remove();
+        // document.body.appendChild(file_table);
+        location.replace("files.html")
         return true;
     }
     else{
@@ -200,8 +200,8 @@ function accessServer(){
 }
 
 function startUI(){
-    a= document.getElementById("data_table");
+    file_table = document.getElementById("data_table");
     document.getElementById("data_table").remove();
 }
 
-startUI()
+// startUI()
