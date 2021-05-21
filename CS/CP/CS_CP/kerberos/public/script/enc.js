@@ -67,7 +67,7 @@ function isPrime(num){
     return true;
 }
 
-function Key_init(){
+function Key_init(usrname){
     var p = 181, q = 179, phi, e, d, n;
     
     phi = (p-1) * (q-1);
@@ -82,6 +82,7 @@ function Key_init(){
 
     console.log(e+" "+d);
     return{
+        user_name: usrname,
         public_key: {
             exp: e,
             n: n

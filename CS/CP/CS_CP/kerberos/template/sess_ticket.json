@@ -3,3 +3,5 @@
     "name": "<client_name>",
     "lifetime": "<Lifespan>"
 }
+
+file=>pup, TGS=>private

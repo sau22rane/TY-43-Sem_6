@@ -6,3 +6,5 @@
     "enc_TGT": "<enc_TGT>",
     "nonce": "<nonce>"
 }
+
+AS=>private, user pub ==> AES key

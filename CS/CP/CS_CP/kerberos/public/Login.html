@@ -4,7 +4,12 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register</title>
+	<title>Login</title>
+	<script src="script/aes.js"></script>
+	<script src="script/rsa.js"></script>
+	<script src="script/enc.js"></script>
+	<script src="script/script.js"></script>
+
 	<style id="applicationStylesheet" type="text/css">
 		.mediaViewInfo {
 			--web-view-name: Login;
@@ -86,7 +91,7 @@
 		#Group_5 {
 			position: absolute;
 			width: 93%;
-			height: 20%;
+			height: 12%;
 			left: 4%;
 			top: 18%;
 			overflow: visible;
@@ -97,21 +102,63 @@
 			opacity: 0.38;
 			background-color: rgba(239,244,247,1);
 		}
+		.Rectangle_3 {
+			position: absolute;
+			overflow: visible;
+			width: 92%;
+			height: 50%;
+			left: 4%;
+			top: 50%;
+		}
+		#Username {
+			width: 92%;
+			height: 26%;
+			left: 5%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 32px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: left;
+		}
 		#Rectangle_3_in {
+			width: 100%;
+			height: 100%;
+		}
+		#Group_5_1 {
+			position: absolute;
+			width: 93%;
+			height: 12%;
+			left: 4%;
+			top: 31%;
+			overflow: visible;
+		}
+		#Rectangle_3_1 {
+			width: 92%;
+			height: 92%;
+			opacity: 0.38;
+			background-color: rgba(239,244,247,1);
+		}
+		.Rectangle_3_1 {
+			position: absolute;
+			overflow: visible;
+			width: 92%;
+			height: 50%;
+			left: 4%;
+			top: 50%;
+		}
+		#Rectangle_3_in_1 {
 			width: 100%;
 			height: 100%;
 			padding: 5%;
 			font-size: 20px;
 		}
-		.Rectangle_3 {
-			position: absolute;
-			overflow: visible;
-			width: 92%;
-			height: 70%;
-			left: 4%;
-			top: 30%;
-		}
-		#Username {
+		#Servername {
 			width: 92%;
 			height: 26%;
 			left: 5%;
@@ -132,7 +179,7 @@
 			width: 86%;
 			height: 30%;
 			left: 4%;
-			top: 50%;
+			top: 53%;
 			overflow: visible;
 		}
 		#Rectangle_3_p {
@@ -151,7 +198,7 @@
 			top: 20%;
 		}
 
-		#generated_key_data {
+		#key_data {
 			width: 93%;
 			height: 15%;
 			left: 5%;
@@ -189,10 +236,10 @@
 			width: 93%;
 			height: 10%;
 			left: 4%;
-			top: 40%;
+			top: 44%;
 			overflow: visible;
 		}
-		#Generate {
+		#Upload {
 			height: 100%;
 			width: 100%;
 			background-color: rgba(255,100,124,1);
@@ -247,10 +294,6 @@
 			line-height:69px;
 		}
 	</style>
-	<script src="script/aes.js"></script>
-	<script src="script/rsa.js"></script>
-	<script src="script/enc.js"></script>
-	<script src="script/script.js"></script>
 </head>
 <body>
 <div id="Login">
@@ -268,31 +311,43 @@
 		<div id="Group_5">
 			<div class="Rectangle_3">
 				<div id="Rectangle_3">
-					<input id="Rectangle_3_in" type="text">
+					<input id="Rectangle_3_in" type='file' accept='application/JSON' onchange='openFile(event)'>
 				</div>
 			</div>
 			<div id="Username">
-				<span>Username</span>
+				<span>Credentials File</span>
 			</div>
 		</div>
+
+		<div id="Group_5_1">
+			<div class="Rectangle_3_1">
+				<div id="Rectangle_3_1">
+					<input id="Rectangle_3_in_1" type='text'>
+				</div>
+			</div>
+			<div id="Servername">
+				<span>Server Name</span>
+			</div>
+		</div>
+
 		<div id="Group_6">
-			<label id="generated_key_data">Key Data</label>
+			<label id="key_data">Token Data</label>
 			<div class="Rectangle_3_p">
-				<textarea readonly id="Rectangle_3_p" name="Rectangle_3_p" ></textarea>
+				<textarea readonly id="Rectangle_3_p" name="Rectangle_3_p" rows="12" cols="63"></textarea>
 				<a href="" id="a">click here to download your file</a>
 			</div>
 			
 		</div>
 		<div id="Group_7">
 			<div class="Rectangle_5">
-				<button id="Generate" onclick="download()">Generate</button>
+				<button id="Upload" onclick="begin()">Upload</button>
 			</div>
 		</div>
 	</div>
-	<button id="Login_u"  onclick="location.href = 'Login.html';">
+	<button id="Login_u">
 		Login
 	</button>
-	<button href="#" id="Register">
+	<button id="Register" onclick="location.href = 'Register.html';">
 		Register
 	</button>
 </div>

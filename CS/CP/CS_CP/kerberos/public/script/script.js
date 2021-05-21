@@ -23,9 +23,7 @@ function openFile(event) {
     var reader = new FileReader();
     reader.onload = function(){
         var text = reader.result;
-        var node = document.getElementById('output');
         var obj = JSON.parse(text);
-        node.innerText = JSON.stringify(obj);
         console.log(obj);
         client_key = obj;
         return obj;
@@ -35,8 +33,15 @@ function openFile(event) {
 };
 
 function download() {
+    var temp_name = document.getElementById("Rectangle_3_in").value;
     var a = document.getElementById("a");
-    var key = JSON.stringify(Key_init());
+    var t = Key_init(temp_name);
+    register({
+        name: temp_name,
+        publicKey: t.public_key
+    });
+    var key = JSON.stringify(t);
+    document.getElementById("Rectangle_3_p").innerText = key;
     var file = new Blob([key], {type: "application/JSON;charset=utf-8"});
     a.href = URL.createObjectURL(file);
     a.download = "Credentials.json";
@@ -48,18 +53,13 @@ function begin(){
     console.log("client_key" + client_key);
     console.log(client_key);
     
-    register();
     getTGT();
     getToken();
     accessServer();
 }
 
-function register(){
+function register(data){
     var temp_url = "http://localhost:5000/authentication/register";
-    var data = {
-        name: "sau22rane",
-        publicKey: client_key.public_key
-    };
     console.log("Registering User");
     post_req(temp_url, data);
 }
@@ -68,7 +68,7 @@ function getTGT()
 {
     temp_url = "http://localhost:5000/authentication/getTGT"
     data = {
-        name: "sau22rane",
+        name: client_key.user_name,
         clientPublicKey: client_key.public_key,
         server: "TGS",
         nonce: 3
@@ -85,14 +85,14 @@ function getTGT()
 function getToken(){
     temp_url = "http://localhost:6001/ticketGeneration/getToken"
     data = {
-        name: "sau22rane",
+        name: client_key.user_name,
         clientPublicKey: client_key.public_key,
-        server: "B",
+        server: document.getElementById("Rectangle_3_in_1").value,
         enc_TGT: global_packet.enc_TGT,
         nonce: 3
     }
     data  = Encrypt( data , client_key.private_key , global_packet.TGS_key , 19189 );
-    data = { "data": data , clientPublicKey: client_key.public_key , name: "sau22rane" };
+    data = { data: data , clientPublicKey: client_key.public_key , name: client_key.user_name };
     console.log("Requesting session Token (Sending TGS_req)")
     post_req(temp_url, data);
     console.log(resp_data.data);
@@ -114,20 +114,22 @@ function getToken(){
 function accessServer(){
     temp_url = "http://localhost:3000/accessServer"
     data = {
-        name: "sau22rane",
+        name: client_key.user_name,
         clientPublicKey: client_key.public_key,
-        server: "B",
+        server: document.getElementById("Rectangle_3_in_1").value,
         token: global_packet.enc_sess_ticket, 
         nonce: 3
     }
     data  = Encrypt( data , client_key.private_key , global_packet.Server_public_key , 19189 );
-    data = { "data": data , clientPublicKey: client_key.public_key , name: "sau22rane" };
+    data = { data: data , clientPublicKey: client_key.public_key , name: client_key.user_name };
     
     var a = document.getElementById("a");
+    var node = document.getElementById('Rectangle_3_p');
     var data = JSON.stringify(data);
+    node.innerText=data;
     var file = new Blob([data], {type: "application/JSON;charset=utf-8"});
     a.href = URL.createObjectURL(file);
     a.download = "Token.json";
     a.click();
-    location.replace("http://localhost:5050")
+    // location.replace("http://localhost:5050")
 }
