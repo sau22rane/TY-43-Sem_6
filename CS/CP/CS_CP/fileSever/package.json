@@ -15,5 +15,8 @@
     "nodemon": "^2.0.7",
     "xmlhttprequest": "^1.8.0",
     "socket.io": "^2.2.0"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
