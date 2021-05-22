@@ -155,7 +155,6 @@
 		#Rectangle_3_in_1 {
 			width: 100%;
 			height: 100%;
-			padding: 5%;
 			font-size: 20px;
 		}
 		#Servername {
@@ -322,7 +321,9 @@
 		<div id="Group_5_1">
 			<div class="Rectangle_3_1">
 				<div id="Rectangle_3_1">
-					<input id="Rectangle_3_in_1" type='text'>
+					<!-- <input id="Rectangle_3_in_1" type='text'> -->
+					<select class="form-control" id="Rectangle_3_in_1">
+					</select>
 				</div>
 			</div>
 			<div id="Servername">
@@ -347,9 +348,12 @@
 	<button id="Login_u">
 		Login
 	</button>
-	<button id="Register" onclick="location.href = 'Register.html';">
+	<button id="Register" onclick="location.href = 'index.html';">
 		Register
 	</button>
 </div>
+<script>
+	fetchServerList();
+</script>
 </body>
 </html>

@@ -37,8 +37,9 @@ function download() {
     var a = document.getElementById("a");
     var t = Key_init(temp_name);
     register({
+        type: 1,
         name: temp_name,
-        publicKey: t.public_key
+        public_key: t.public_key
     });
     var key = JSON.stringify(t);
     document.getElementById("Rectangle_3_p").innerText = key;
@@ -68,9 +69,9 @@ function getTGT()
 {
     temp_url = "http://localhost:5000/authentication/getTGT"
     data = {
-        name: client_key.user_name,
-        clientPublicKey: client_key.public_key,
-        server: "TGS",
+        client_name: client_key.user_name,
+        client_key: client_key.public_key,
+        server: document.getElementById("Rectangle_3_in_1").value,
         nonce: 3
     }
     console.log("Requesting AS (Sending AS_req)")
@@ -85,14 +86,14 @@ function getTGT()
 function getToken(){
     temp_url = "http://localhost:6001/ticketGeneration/getToken"
     data = {
-        name: client_key.user_name,
-        clientPublicKey: client_key.public_key,
+        client_name: client_key.user_name,
+        client_key: client_key.public_key,
         server: document.getElementById("Rectangle_3_in_1").value,
         enc_TGT: global_packet.enc_TGT,
         nonce: 3
     }
     data  = Encrypt( data , client_key.private_key , global_packet.TGS_key , 19189 );
-    data = { data: data , clientPublicKey: client_key.public_key , name: client_key.user_name };
+    data = { data: data , client_key: client_key.public_key , client_name: client_key.user_name };
     console.log("Requesting session Token (Sending TGS_req)")
     post_req(temp_url, data);
     console.log(resp_data.data);
@@ -112,16 +113,18 @@ function getToken(){
 }
 
 function accessServer(){
+    console.log("Global_packet");
+    console.log(global_packet);
     temp_url = "http://localhost:3000/accessServer"
     data = {
-        name: client_key.user_name,
-        clientPublicKey: client_key.public_key,
+        client_name: client_key.user_name,
+        client_key: client_key.public_key,
         server: document.getElementById("Rectangle_3_in_1").value,
         token: global_packet.enc_sess_ticket, 
         nonce: 3
     }
     data  = Encrypt( data , client_key.private_key , global_packet.Server_public_key , 19189 );
-    data = { data: data , clientPublicKey: client_key.public_key , name: client_key.user_name };
+    data = { data: data , client_key: client_key.public_key , client_name: client_key.user_name };
     
     var a = document.getElementById("a");
     var node = document.getElementById('Rectangle_3_p');
@@ -132,4 +135,21 @@ function accessServer(){
     a.download = "Token.json";
     a.click();
     // location.replace("http://localhost:5050")
+}
+
+function fetchServerList(){
+    const http = new XMLHttpRequest()
+    http.open("GET", "http://localhost:5000/authentication/getServerNames" )
+    http.send()
+    http.onload = () => {
+        var temp_list = JSON.parse(http.responseText).data;
+        console.log("\ndata  : "+JSON.stringify(temp_list) );
+        var drop_down = document.getElementById("Rectangle_3_in_1");
+        for(var i = 0; i<temp_list.length; i++){
+            var opt = document.createElement("option");
+            opt.value=temp_list[i];
+            opt.innerText=temp_list[i];   
+            drop_down.appendChild(opt);
+        }
+    };
 }

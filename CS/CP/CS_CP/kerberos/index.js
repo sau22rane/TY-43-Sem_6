@@ -40,9 +40,9 @@ app2.get('/',(req,res) => {
     res.send("Ticket Generating server running fine");
 });
 
-mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true },() => {
-    console.log("DB connected");
-});
+// mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true },() => {
+//     console.log("DB connected");
+// });
 
 app1.listen(PORT1,() => console.log(`Server runinng on port : http://localhost:${PORT1}`));
 app2.listen(PORT2,() => console.log(`Server runinng on port : http://localhost:${PORT2}`));
