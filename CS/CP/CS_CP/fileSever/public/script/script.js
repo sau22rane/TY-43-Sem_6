@@ -168,7 +168,7 @@ function fetchData(){
 }
 
 function verify(){
-    while(!accessServer());
+    accessServer();
 }
 
 function accessServer(){

@@ -19,7 +19,7 @@ var io = require('socket.io')(http);
 app1.use(cors());
 
 const PORT = 3000;
-const PORT1 = 5050;
+const PORT1 = 5051;
 app.use(bodyParser.json());
 let publicKey3 ="publicKey3";
 
@@ -36,7 +36,7 @@ app.post('/accessServer',(req,res) => {
     var authentic = checkPacket(req);
     if(authentic)
     {
-        decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.clientPublicKey );
+        decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.client_key );
         console.log(decryptedPacket)
     
         decryptedSessionTicket = enc.Decrypt( decryptedPacket.token , keys4.private_key , publicKey3 );
@@ -56,18 +56,55 @@ app.post('/accessServer',(req,res) => {
 
 function checkPacket(req)
 {
-    decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.clientPublicKey );    
+    console.log(req.body);
+    decryptedPacket = enc.Decrypt(req.body.data , keys4.private_key , req.body.client_key );   
     flag = checksessionTicket(decryptedPacket);
-    if(decryptedPacket.name === req.body.name && flag)
+    if(decryptedPacket.client_name === req.body.client_name && flag)
         return true;
     return false;
 }
 function checksessionTicket(decryptedPacket)
 {
     decryptedSessionTicket = enc.Decrypt( decryptedPacket.token , keys4.private_key , publicKey3 );
-    if(decryptedSessionTicket.name === decryptedPacket.name)
+    console.log(decryptedSessionTicket);
+    console.log(decryptedPacket.client_name);
+    console.log(decryptedSessionTicket.client_name);
+    if(decryptedSessionTicket.client_name === decryptedPacket.client_name)
         return true;
     return false;
+}
+
+function post_req(url, data){
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    xmlhttp.onreadystatechange = function($evt){
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            // console.log(xmlhttp.responseText);
+            let res = JSON.parse(xmlhttp.responseText);
+            console.log("response: ");
+            console.log(res);
+            resp_data = res;
+        }
+    }
+    xmlhttp.open("POST", url, false);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.send(JSON.stringify(data));
+}
+
+function register(data){
+    var temp_url = "http://localhost:5000/authentication/register";
+    console.log("Registering User");
+    post_req(temp_url, data);
+}
+
+function fetchUrl(url)  
+{  
+    const http = new XMLHttpRequest()
+    http.open("GET", "http://localhost:6001/ticketGeneration/getpublicKey" )
+    http.send()
+    http.onload = () => {
+        console.log("\npublic key-3  : "+JSON.stringify(JSON.parse(http.responseText)) );
+        publicKey3 = { "exp" : JSON.parse(http.responseText).exp , "n": JSON.parse(http.responseText).n };
+    };   
 }
 
 app.get('/fileServer/getFileList',(req,res) => {
@@ -92,3 +129,12 @@ app1.use(express.static('public'));
 http.listen(PORT1 || 8000, function () {
     console.log('listening on', PORT1);
 });
+
+
+register({
+    type: 2,
+    name: "System Software",
+    public_key: keys4.public_key
+});
+
+setTimeout(fetchUrl,1600);
