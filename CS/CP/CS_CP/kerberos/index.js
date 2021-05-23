@@ -1,4 +1,6 @@
 //mongodb+srv://TY-43:<password>@cluster0.wyvaa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+var SELF_IP="localhost"
+
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
@@ -44,9 +46,9 @@ app2.get('/',(req,res) => {
 //     console.log("DB connected");
 // });
 
-app1.listen(PORT1,() => console.log(`Server runinng on port : http://localhost:${PORT1}`));
-app2.listen(PORT2,() => console.log(`Server runinng on port : http://localhost:${PORT2}`));
-app.listen(PORT,() => console.log(`Server runinng on port : http://localhost:${PORT}`));
+app1.listen(PORT1,() => console.log(`Server runinng on port : http://`+SELF_IP+`:${PORT1}`));
+app2.listen(PORT2,() => console.log(`Server runinng on port : http://`+SELF_IP+`:${PORT2}`));
+app.listen(PORT,() => console.log(`Server runinng on port : http://`+SELF_IP+`:${PORT}`));
 
 app3.use(cors());
 app3.use(express.static('public'));

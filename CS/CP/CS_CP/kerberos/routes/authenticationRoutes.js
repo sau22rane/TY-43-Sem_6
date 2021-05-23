@@ -1,3 +1,5 @@
+var SELF_IP="localhost"
+
 var express = require('express')
 const enc = require('../encryptionLibrary/enc');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -98,7 +100,7 @@ function createTGT(data, server_alias){
 function fetchUrl(url)  
 {  
     const http = new XMLHttpRequest()
-    http.open("GET", "http://localhost:6001/ticketGeneration/getpublicKey" )
+    http.open("GET", "http://"+SELF_IP+":6001/ticketGeneration/getpublicKey" )
     http.send()
     http.onload = () => {
         console.log("\npublic key-3  : "+JSON.stringify(JSON.parse(http.responseText)) );

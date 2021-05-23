@@ -1,3 +1,5 @@
+var SELF_IP="localhost"
+
 var resp_data;
 var client_key;
 var global_packet;
@@ -60,14 +62,14 @@ function begin(){
 }
 
 function register(data){
-    var temp_url = "http://localhost:5000/authentication/register";
+    var temp_url = "http://"+SELF_IP+":5000/authentication/register";
     console.log("Registering User");
     post_req(temp_url, data);
 }
 
 function getTGT()
 {
-    temp_url = "http://localhost:5000/authentication/getTGT"
+    temp_url = "http://"+SELF_IP+":5000/authentication/getTGT"
     data = {
         client_name: client_key.user_name,
         client_key: client_key.public_key,
@@ -84,7 +86,7 @@ function getTGT()
 }
 
 function getToken(){
-    temp_url = "http://localhost:6001/ticketGeneration/getToken"
+    temp_url = "http://"+SELF_IP+":6001/ticketGeneration/getToken"
     data = {
         client_name: client_key.user_name,
         client_key: client_key.public_key,
@@ -115,7 +117,7 @@ function getToken(){
 function accessServer(){
     console.log("Global_packet");
     console.log(global_packet);
-    temp_url = "http://localhost:3000/accessServer"
+    temp_url = "http://"+SELF_IP+":3000/accessServer"
     data = {
         client_name: client_key.user_name,
         client_key: client_key.public_key,
@@ -134,12 +136,12 @@ function accessServer(){
     a.href = URL.createObjectURL(file);
     a.download = "Token.json";
     a.click();
-    // location.replace("http://localhost:5050")
+    // location.replace("http://"+SELF_IP+":5050")
 }
 
 function fetchServerList(){
     const http = new XMLHttpRequest()
-    http.open("GET", "http://localhost:5000/authentication/getServerNames" )
+    http.open("GET", "http://"+SELF_IP+":5000/authentication/getServerNames" )
     http.send()
     http.onload = () => {
         var temp_list = JSON.parse(http.responseText).data;

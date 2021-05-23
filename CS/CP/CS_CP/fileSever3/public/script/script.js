@@ -1,3 +1,5 @@
+var SELF_IP="localhost"
+
 var resp_data;
 var file_table;
 var client_token;
@@ -86,7 +88,7 @@ function addElements(data){
         var link = document.createElement('a');
         link.text=data[i].name;
         link.style.color="rgb(62, 62, 62)";
-        link.href='http://localhost:3003/fileserver/getFile/'+link.text;
+        link.href='http://'+SELF_IP+':3003/fileserver/getFile/'+link.text;
 
         span2.appendChild(link);
         span3.innerText=data[i].size;
@@ -140,7 +142,7 @@ function createTable(data){
         var link = document.createElement('a');
         // link.href=data[i].name;
         link.text=data[i].name;
-        link.href='http://localhost:3003/fileserver/getFile/'+link.text;
+        link.href='http://'+SELF_IP+':3003/fileserver/getFile/'+link.text;
         td2.appendChild(link);
         td2 .style.border = '1px solid black';
 
@@ -162,7 +164,7 @@ window.addEventListener("load", function(){
 })
 
 function fetchData(){
-    var temp_url = "http://localhost:3003/fileserver/getFileList";
+    var temp_url = "http://"+SELF_IP+":3003/fileserver/getFileList";
     get_req(temp_url);
     addElements(resp_data);
 }
@@ -172,7 +174,7 @@ function verify(){
 }
 
 function accessServer(){
-    temp_url = "http://localhost:3003/accessServer"
+    temp_url = "http://"+SELF_IP+":3003/accessServer"
     // data = {
     //     name: "sau22rane",
     //     clientPublicKey: client_key.public_key,

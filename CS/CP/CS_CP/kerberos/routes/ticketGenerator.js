@@ -1,3 +1,5 @@
+var SELF_IP="localhost";
+
 var express = require('express')
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const enc = require('../encryptionLibrary/enc');
@@ -77,13 +79,13 @@ function checkPacket(name1, name2)
 function fetchUrl1(url)  
 {  
     const http = new XMLHttpRequest()
-    http.open("GET", "http://localhost:5000/authentication/getpublicKey" )
+    http.open("GET", "http://"+SELF_IP+":5000/authentication/getpublicKey" )
     http.send()
     http.onload = () => {
         console.log("\npublic key-2 : "+JSON.stringify(JSON.parse(http.responseText)) );
         publicKey2 = JSON.parse(http.responseText);
     };    
-    // post_req("http://localhost:3000/getpublicKey");
+    // post_req("http://"+SELF_IP+":3000/getpublicKey");
 }
 function post_req(url){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 

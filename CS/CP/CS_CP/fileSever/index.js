@@ -1,3 +1,5 @@
+var SELF_IP="localhost"
+
 var fs = require('fs');
 
 var express = require('express')
@@ -91,7 +93,7 @@ function post_req(url, data){
 }
 
 function register(data){
-    var temp_url = "http://localhost:5000/authentication/register";
+    var temp_url = "http://"+SELF_IP+":5000/authentication/register";
     console.log("Registering User");
     post_req(temp_url, data);
 }
@@ -99,7 +101,7 @@ function register(data){
 function fetchUrl(url)  
 {  
     const http = new XMLHttpRequest()
-    http.open("GET", "http://localhost:6001/ticketGeneration/getpublicKey" )
+    http.open("GET", "http://"+SELF_IP+":6001/ticketGeneration/getpublicKey" )
     http.send()
     http.onload = () => {
         console.log("\npublic key-3  : "+JSON.stringify(JSON.parse(http.responseText)) );
@@ -123,7 +125,7 @@ app.get('/fileServer/getFile/:fname',(req,res) => {
 });
 
 
-app.listen(PORT,() => console.log(`File Server runinng on port : http://localhost:${PORT}`));
+app.listen(PORT,() => console.log(`File Server runinng on port : http://`+SELF_IP+`:${PORT}`));
 
 app1.use(express.static('public'));
 http.listen(PORT1 || 8000, function () {
