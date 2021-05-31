@@ -1,0 +1,7 @@
+{
+    "client_name": "<client_name>",
+    "client_key": "<clientPublicKey>",
+    "server": "<file_server>",
+    "enc_TGT": "<enc_TGT>",
+    "nonce": "nonce"
+}

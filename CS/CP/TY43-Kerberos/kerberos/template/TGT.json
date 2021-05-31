@@ -1,0 +1,7 @@
+{
+    "server_key": "<file_server_key",
+    "server_name": "<file_server_name",
+    "client_key": "<client_key>",
+    "client_name": "<client_name>",
+    "lifetime": "<Lifetime>"
+}

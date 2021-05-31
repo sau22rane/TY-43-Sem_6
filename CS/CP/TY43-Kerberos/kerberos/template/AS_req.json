@@ -1,0 +1,7 @@
+{
+    "client_name": "<client name>",
+    "client_key": "<client_publicKey>",
+    "server": "<server_name>",
+    "nonce": "<nonce_value>"
+ }
+ 
