@@ -1,0 +1,227 @@
+----------Starting Operating System----------
+
+Global Timer: 0
+No process in ready queue
+$AMJ PCB created for job id : 1 P
+PCB=> TTL:3 TLL:1 TTC:0 LLC:0
+eof: 0
+Start Channel : 0 IOI 4
+Global Timer: 1
+No process in ready queue
+Start Channel : 2 IOI 0
+Channel 3 performs IS on : $AMJ000100030001                        
+Encountered Control card: $AMJ
+
+Loading new Job into Drum....!!!
+Global Timer: 2
+No process in ready queue
+Global Timer: 3
+No process in ready queue
+Channel 2 finisihed
+Global Timer: 4
+No process in ready queue
+Global Timer: 5
+No process in ready queue
+Channel 0 finisihed
+Encountered Program card. P-cout:1 ID:1
+eof: 0
+Start Channel : 0 IOI 4
+Global Timer: 6
+No process in ready queue
+Start Channel : 2 IOI 0
+Channel 3 performs IS on : GD10PD10H                               
+storing at : 0
+Global Timer: 7
+No process in ready queue
+Global Timer: 8
+No process in ready queue
+Channel 2 finisihed
+Global Timer: 9
+No process in ready queue
+Global Timer: 10
+No process in ready queue
+Channel 0 finisihed
+$DTA Encountered 
+eof: 0
+Start Channel : 0 IOI 4
+Global Timer: 11
+No process in ready queue
+Start Channel : 2 IOI 0
+Channel 3 performs IS on : $DTA                                    
+Encountered Control card: $DTA
+Global Timer: 12
+No process in ready queue
+Global Timer: 13
+No process in ready queue
+Channel 2 finisihed
+Global Timer: 14
+No process in ready queue
+Global Timer: 15
+No process in ready queue
+Channel 0 finisihed
+Encountered Data card.
+eof: 0
+Start Channel : 0 IOI 4
+Global Timer: 16
+No process in ready queue
+Start Channel : 2 IOI 0
+Channel 3 performs IS on : HELLO WORLD                             
+storing at : 10
+Global Timer: 17
+No process in ready queue
+Global Timer: 18
+No process in ready queue
+Channel 2 finisihed
+Global Timer: 19
+No process in ready queue
+Global Timer: 20
+No process in ready queue
+Channel 0 finisihed
+found-------------
+eof: 1
+Global Timer: 21
+No process in ready queue
+Start Channel : 2 IOI 1
+Channel 3 performs IS on : $END00011                               
+Encountered Control card: $END
+
+PCB of Job id : 1
+
+Job added Load queue. ID:1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 22
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 23
+No process in ready queue
+Channel 2 finisihed
+Start Channel : 2 IOI 1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 24
+
+Executing Process: 1
+Mapped IC to RA=> 0 : 250
+1 CURRENT ttc
+Page fault=> Setting PI=3 : 
+Global Timer: 25
+
+Executing Process: 1
+Mapped IC to RA=> 0 : 250
+2 CURRENT ttc
+Setting SI=>1
+Channel 2 finisihed
+Start Channel : 2 IOI 1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 26
+
+Executing Process: 1
+Mapped IC to RA=> 1 : 251
+3 CURRENT ttc
+Setting SI=>2
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 27
+No process in ready queue
+Channel 2 finisihed
+Start Channel : 2 IOI 1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 28
+
+Executing Process: 1
+Mapped IC to RA=> 2 : 252
+Job Completed Successfully
+
+Terminate msg added to 1 msg is: Terminated Succesfully
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 29
+No process in ready queue
+Channel 2 finisihed
+Start Channel : 2 IOI 1
+Start Channel : 1 IOI 1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 30
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 31
+No process in ready queue
+Channel 2 finisihed
+Start Channel : 2 IOI 1
+All output lines done Terminated Succesfully
+Start Channel : 1 IOI 1
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 32
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 33
+No process in ready queue
+Channel 2 finisihed
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 34
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 35
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 36
+No process in ready queue
+Channel 1 finisihed
+Start Channel : 1 IOI 5
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 37
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 38
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 39
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 40
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 41
+No process in ready queue
+Channel 1 finisihed
+Start Channel : 1 IOI 5
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 42
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 43
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 44
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 45
+No process in ready queue
+emptyQ is empty or eof = 1
+eof: 1
+Global Timer: 46
+No process in ready queue
+Channel 1 finisihed
+Start Channel : 1 IOI 5
+emptyQ is empty or eof = 1
+eof: 1
