@@ -312,7 +312,6 @@ socket.on('offer', function (event) {
 });
 
 socket.on('answer', function (event) {
-    offerCreated = false;
     console.log('Answer Recieved '+length);
     rtcPeerConnection[length].setRemoteDescription(new RTCSessionDescription(event.sdp));
     console.log(rtcPeerConnection);
