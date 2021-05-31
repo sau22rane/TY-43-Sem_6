@@ -22,7 +22,7 @@ int main(){
     // Associating sockaddr_in info
     srvinfo.sin_family = AF_INET;
     srvinfo.sin_port =htons(5000);
-    srvinfo.sin_addr.s_addr= inet_addr("10.0.2.4"); 
+    srvinfo.sin_addr.s_addr= inet_addr("127.0.0.1"); 
     
     // Registering socket at IP/Internet Layer 
 

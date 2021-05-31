@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<style>
+        label{font-size: 3.2rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; padding-bottom: 5px; color: rgb(166, 255, 255);}
+        input{font-size: 2.8rem; font-family: 'Courier New', Courier, monospace; background-color: rgba(42, 147, 238, 0.759);}
+        p{text-align: center; font-size: 2rem;color: rgba(166, 255, 255, 0.67);}
+		#block {
+            border-radius: 20px;
+			margin-top: 10%;
+            padding: 2% 4% 2% 4%;
+            background-color: rgba(72, 72, 72, 0.773);
+		}
+        #login{
+            width: 100%;
+            text-align: center;
+            font-size: 4.5rem;
+            font-family: 'Times New Roman', Times, serif;
+            color: aliceblue;
+        }
+        #submit_btn{
+            border-radius: 15px;
+            margin-top: 30px;
+            padding: 2%;
+            display: block;
+            font-size: 2rem;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 30px;;
+            background-color: rgb(144, 185, 255);
+        }
+        #email_block{
+            padding-top: 15px;
+        }
+        #contact_block{
+            padding-top: 15px;
+        }
+        #password_block{
+            padding-top: 15px;
+        }
+        input:focus {
+            background-color: lightblue;
+        }
+	</style>
+</head>
+<body style="background-image: url('./images/bg3.jpg');">
+	<div class="col-sm-4 col-sm-offset-4" id="block">
+        <label id="login">
+            Login
+        </label>
+        <hr>
+
+        <form action="index.html" style="width: 80%; padding-left: 10%;">
+            <div class="form-group" id="email_block">
+              <label for="email">Email address:</label>
+              <input type="text" class="form-control" id="email" placeholder="Enter your Email here">
+            </div>
+            <div class="form-group" id="contact_block">
+                <label for="contact">Contact Number:</label>
+                <input type="number" class="form-control" id="contact" placeholder="Enter your Contact here">
+            </div>
+            <div class="form-group" id="password_block">
+              <label for="pwd">Password:</label>
+              <input type="password" class="form-control" id="pwd">
+            </div>
+            <button type="submit" id="submit_btn" class="btn btn-default">Submit</button>
+        </form>
+
+        <hr>
+        <p>Welcome to the Inifinite Universe</p>
+
+        
+	</div>
+</body>
+</html>

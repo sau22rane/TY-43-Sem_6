@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>TY-C-73 Saurabh Rane</title>
+        <script>
+            function Reverse(){
+                var input_array=[];
+                input_array = fetch_input();
+                var mid = Math.floor(input_array.length/2);
+                var temp = 0;
+                for(var i = 0; i<mid; i++){
+                    console.log(i+" "+(input_array.length-i-1));
+                    temp = input_array[i];
+                    input_array[i] = input_array[input_array.length-i-1];
+                    input_array[input_array.length-i-1] = temp;
+                }
+
+                var str = "";
+                input_array.forEach(function (element, index) {
+                    str+=(index+1)+".&nbsp&nbsp"+element+"<br>";
+                });
+                document.querySelector("#reversed_array").innerHTML = str;
+
+            }
+
+            function fetch_input(){
+                var data = document.querySelector("#array_input").value.split(' ');
+                document.querySelector("#array_input").value = "";
+                var i = 0;
+                while(i<data.length){
+                    if(data[i]!=""){
+                        i++;
+                    }
+                    else{
+                        data.splice(i,1); 
+                    }
+
+                }
+                console.log(data);
+                var str = "";
+                data.forEach(function (element, index) {
+                    str+=(index+1)+".&nbsp&nbsp"+element+"<br>";
+                });
+                document.querySelector("#entered_array").innerHTML = str;
+                
+                return data;
+            }
+        </script>
+        <style>
+            p{
+                font-size: 25px;
+            }
+            label{
+                font-size: 25px;
+            }
+            .center {
+                margin: auto;
+                width: 30%;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center" style="border: 3px solid green;">
+            <h1 style="text-align: center;">Reverse an array</h1>
+            <div style="width: 80%; margin: auto;">
+                <label>Enter elements in space seperated maner:</label><br>
+                <input type="text" id="array_input" placeholder="Enter numbers.">
+                <button onclick="Reverse()">Reverse</button>
+            </div>
+            <br><br>
+            <p style="text-align: center;">Entered Array:</p>
+            <p id="entered_array" style="text-align: center;"></p>
+            <p style="text-align: center;">Reverse Array:</p>
+            <p id="reversed_array" style="text-align: center;"></p>
+        </div>
+    </body>
+</html>

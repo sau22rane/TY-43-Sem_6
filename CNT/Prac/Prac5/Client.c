@@ -18,7 +18,7 @@ int main(){
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_port =htons(5000);
-    servaddr.sin_addr.s_addr= inet_addr("10.0.2.4"); 
+    servaddr.sin_addr.s_addr= inet_addr("127.0.0.1"); 
     while(1){
         bzero(buff, sizeof(buff));
         printf("\nClient: ");

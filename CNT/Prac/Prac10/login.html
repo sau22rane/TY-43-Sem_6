@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>TY-C-73 Saurabh Rane</title>
+        <script>
+            function validateForm(){
+                var un = document.forms["loginform"]["username"].value;
+                var pw = document.forms["loginform"]["pwd"].value;
+                
+                if ((un == "sau22rane") && (pw == "rane22sau")){
+                    return true;
+                }
+                else{ 
+                    alert("Incorrect Credentials");
+                    return false;
+                }
+            }
+        </script>
+
+    </head>
+    <body>
+
+        <form name="loginform" onsubmit="return validateForm()" action="index.htm" method="post">
+        <label for="username">Username:</label>
+        <input type="text" placeholder="Enter Username" id="username" name="username" required>
+        <br><br>
+        <label for="pwd">Password :</label>
+        <input type="password"  placeholder="Enter Password" id="pwd" name="pwd" required>
+        <br><br>
+        <input type="submit" value="Login">
+        </form>
+    </body>
+</html>
