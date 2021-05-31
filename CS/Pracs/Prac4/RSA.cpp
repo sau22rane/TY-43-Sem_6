@@ -38,8 +38,11 @@ RSA::RSA(){
     cin>>this->q;
     cout<<"Enter Exponent(e): ";
     cin>>this->e;
+    this->phi = (this->p-1) * (this->q-1);
+    this->n = (this->p) * (this->q);
 
-    if(GCD( this->n, this->e) == 1){
+    cout<<GCD( this->phi, this->e)<<endl;
+    if(GCD( this->phi, this->e) == 1){
         cout<<"Valid Exponent e = "<<this->e<<endl;
     }
     else{
@@ -48,8 +51,6 @@ RSA::RSA(){
     }
 
 
-    this->phi = (this->p-1) * (this->q-1);
-    this->n = (this->p) * (this->q);
     this->d = this->inv(e);
     cout<<endl<<"-------------------------------------"<<endl;
     cout<<"P = "<<this->p<<endl;

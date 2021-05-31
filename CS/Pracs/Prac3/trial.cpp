@@ -8,13 +8,18 @@ class AES{
                     0b1101, 0b0001, 0b1000, 0b0101,
                     0b0110, 0b0010, 0b0000, 0b0011,
                     0b1100, 0b1110, 0b1111, 0b0111 };
-    int S_BOX_INV[16];
+    int S_BOX_INV[16]={
+                    0b1010, 0b0101, 0b1001, 0b1011,
+                    0b0001, 0b0111, 0b1000, 0b1111,
+                    0b0110, 0b0000, 0b0010, 0b0011,
+                    0b1100, 0b0100, 0b1101, 0b1110};
+                    
     int irreducible = 0b10011;
     int Me[2][2] = {{1,4},{4,1}};
     int InvMe[2][2] = {{9,2},{2,9}};
 
-    int SubNib(int num);
-    int InvSubNib(int num);
+    int SubNib(int num, int n);
+    int InvSubNib(int num, int n);
     int RotNib(int num);
     int RowShift(int num);
     int PolyReduce(int num);
@@ -32,54 +37,41 @@ void binary(int num, int n);
 
 int main(){
 
-    string key_str;
-    int key = 0, len;
-    cout<<"Enter a Key(16 bits): ";         // 0100101011110101   19189
-    cin>>key;
-//    len = key_str.length();
-//    for(int i = 0; i<len; i++){
-//        key = key<<1;
-//        key|=(key_str.at(i) - '0');
-//    }
-
-    int data= 0 ;
-//    string data_str;
-    cout<<"Enter data(16 bits): ";          // 1101011100101000   55080
-    cin>>data;
-//    for(int i = 0; i<16; i++){
-//        data = data<<1;
-//        data|=(data_str.at(i) - '0');
-//    }
-    cout<<"\nKey:\t";
-    binary(key, 16);
-    cout<<"Data:\t";
-    binary(data, 16);
-    cout<<endl;
+    int key = 19189;
 
     AES aes( key );
     aes.KeyGenerate();
-    int enc = aes.Encrypt( data );
-    cout<<"\nCipher Text: ";
-    binary(enc, 16);
+    int enc = aes.Encrypt( 102 );
     int dec = aes.Decrypt( enc );
-    cout<<"Decrypted Text: ";
+    binary(enc, 16);
     binary(dec, 16);
+    
+    for(int i = (int) 'a'; i<=(int) 'z'; i++){
+        int enc = aes.Encrypt( i );
+        int dec = aes.Decrypt( enc );
+        if(dec!=i){
+        cout<<"Failed "<<i<<" "<<dec<<"\n";
+        break;
+        }
+    }
 }
 
 AES::AES(int key){
     this->key = key;
+    binary(key, 16); // 100101011110101
+    cout<<this->key<<endl;
 
-    for(int i = 0; i<16; i++){
-        this->S_BOX_INV[ this->S_BOX[i] ] = i;
-    }
+//    for(int i = 0; i<16; i++){
+//        this->S_BOX_INV[ this->S_BOX[i] ] = i;
+//    }
 }
 
 void AES::KeyGenerate(){
     this->W0 = (this->key >> 8);
     this->W1 = (this->key & 0xFF);
-    this->W2 = (this->W0 ^ 0x80 ^ SubNib(RotNib(this->W1)) );
+    this->W2 = (this->W0 ^ 0x80 ^ SubNib(RotNib(this->W1), 8) );
     this->W3 = (this->W2 ^ this->W1);
-    this->W4 = (this->W2 ^ 0x30 ^ SubNib(RotNib(this->W3)) );
+    this->W4 = (this->W2 ^ 0x30 ^ SubNib(RotNib(this->W3), 8) );
     this->W5 = (this->W4 ^ this->W3);
     cout<<"W0:\t";
     binary(W0, 8);
@@ -108,7 +100,7 @@ void AES::KeyGenerate(){
 int AES::Encrypt(int data){
     cout<<"---Debugging Encrypt---\n";
     int ARK1 = (data ^ this->K1);
-    int subNib = SubNib(ARK1);
+    int subNib = SubNib(ARK1, 16);
     int shiftRow = RowShift(subNib);
    
     int mat[2][2];
@@ -125,7 +117,7 @@ int AES::Encrypt(int data){
     binary(mixColn, 16);
     int ARK2 = (mixColn^this->K2);
     binary(ARK2, 16);
-    int subNib2 = SubNib(ARK2);
+    int subNib2 = SubNib(ARK2, 16);
     binary(subNib2, 16);
     int shiftRow2 = RowShift(subNib2);
 
@@ -136,10 +128,15 @@ int AES::Encrypt(int data){
 }
 
 int AES::Decrypt(int data){
+    cout<<"\n\n---Debugging Decrypt---\n";
     int ARK3 = (data^this->K3);
+    binary(ARK3, 16);
     int shiftRow2 = RowShift(ARK3);
-    int subNib2 = InvSubNib(shiftRow2);
+    binary(shiftRow2, 16);
+    int subNib2 = InvSubNib(shiftRow2, 16);
+    binary(subNib2, 16);
     int ARK2 = (subNib2^this->K2);
+    binary(ARK2, 16);
 
     int mat[2][2];
     for(int i = 0; i<2; i++){
@@ -153,28 +150,42 @@ int AES::Decrypt(int data){
 
     int mixColn = MixCol(S_mat);
     int shiftRow1 = RowShift(mixColn);
-    int subNib1 = InvSubNib(shiftRow1);
+    int subNib1 = InvSubNib(shiftRow1, 16);
     int ARK1 = (subNib1^this->K1);
+    cout<<endl<<endl;
     return ARK1;
 }
 
 
 
 
-int AES::SubNib(int num){
+int AES::SubNib(int num, int n){
     int i = 0, res = 0;
-    while ((num>> i*4) !=0){
-        res|= (S_BOX[((num & (15<<i*4))>>i*4)]<<i*4);
-        i++;
+    if(n == 8){
+        res|= (S_BOX[((num & (15<<0*4))>>0*4)]<<0*4);
+        res|= (S_BOX[((num & (15<<1*4))>>1*4)]<<1*4);
+    }
+    else{
+        res|= (S_BOX[((num & (15<<0*4))>>0*4)]<<0*4);
+        res|= (S_BOX[((num & (15<<1*4))>>1*4)]<<1*4);
+        res|= (S_BOX[((num & (15<<2*4))>>2*4)]<<2*4);
+        res|= (S_BOX[((num & (15<<3*4))>>3*4)]<<3*4);
+    
     }
     return res;
 }
 
-int AES::InvSubNib(int num){
+int AES::InvSubNib(int num, int n){
     int i = 0, res = 0;
-    while ((num>> i*4) !=0){
-        res|= (S_BOX_INV[((num & (15<<i*4))>>i*4)]<<i*4);
-        i++;
+    if(n == 8){
+        res|= (S_BOX_INV[((num & (15<<0*4))>>0*4)]<<0*4);
+        res|= (S_BOX_INV[((num & (15<<1*4))>>1*4)]<<1*4);
+    }
+    else{
+        res|= (S_BOX_INV[((num & (15<<0*4))>>0*4)]<<0*4);
+        res|= (S_BOX_INV[((num & (15<<1*4))>>1*4)]<<1*4);
+        res|= (S_BOX_INV[((num & (15<<2*4))>>2*4)]<<2*4);
+        res|= (S_BOX_INV[((num & (15<<3*4))>>3*4)]<<3*4);
     }
     return res;
 }
@@ -231,8 +242,8 @@ int AES::MixCol(int a[2][2]){
 
 
 void binary(int num, int n){
-    for(int i = 1;i<=n;i++){
-        cout<<( (num>>(n-i)) & 1);
+    for(int i = n-1;i>=0;i--){
+        cout<<( (num>>(i)) & 1);
         if(i%4==0)
             cout<<" ";
     }
