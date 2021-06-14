@@ -1,0 +1,6 @@
+{
+    "name": "<client name>",
+    "clientPublicKey": "<clientPublicKey>",
+    "server": "<TGS>",
+    "nonce": "<nonce value>"
+}

@@ -1,0 +1,8 @@
+{
+    "TGSPublicKey": "<TGSpublic_key>",
+    "timestamp": "<Timestamp>",
+    "lifetime": "<Lifetime>",
+    "server": "<Server>",
+    "enc_sess_ticket": "<enc_sess_ticket>",
+    "nonce": "<nonce>"
+}

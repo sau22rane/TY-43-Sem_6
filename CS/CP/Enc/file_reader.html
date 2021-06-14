@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <script src="script/aes.js"></script>
+        <script src="script/rsa.js"></script>
+        <script src="script/enc.js"></script>
+        <script src="script/file.js"></script>
+    </head>
+    <body>
+
+    <a href="" id="a">click here to download your file</a>
+    <button onclick="download('file text', 'myfilename.txt', 'text/plain')">Generate Keys</button>
+    <br><br>
+    <label>Load File</label><br>
+    <input type='file' accept='application/JSON' onchange='openFile(event)'><br>
+    <div id='output'>
+    ...
+    </div>
+
+    </body>
+    </html>

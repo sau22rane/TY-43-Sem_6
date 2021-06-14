@@ -1,0 +1,6 @@
+{
+    "Name": "<client_name>",
+    "Server": "<file_server>",
+    "enc_TGT": "<enc_TGT>",
+    "Nonce": "Nonce"
+}

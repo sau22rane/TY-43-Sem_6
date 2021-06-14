@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<script src="script/aes.js"></script>
+	<script src="script/rsa.js"></script>
+	<script src="script/enc.js"></script>
+	<script src="script/script.js"></script>
+
+	<style id="applicationStylesheet" type="text/css">
+		.mediaViewInfo {
+			--web-view-name: Login;
+			--web-view-id: Login;
+			--web-scale-on-resize: true;
+			--web-enable-deep-linking: true;
+		}
+		:root {
+			--web-view-ids: Login;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			border: none;
+		}
+		#Login {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0,97,131,1);
+			overflow: hidden;
+			--web-view-name: Login;
+			--web-view-id: Login;
+			--web-scale-on-resize: true;
+			--web-enable-deep-linking: true;
+		}
+		@keyframes fadein {
+		
+			0% {
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+			}
+		
+		}
+		#Rectangle_6 {
+			fill: rgba(253,201,100,1);
+		}
+		.Rectangle_6 {
+			width: 10%;
+			height: 200%;
+			position: absolute;
+			overflow: visible;
+			transform: matrix(1,0,0,1,400,-500) rotate(45deg);
+			transform-origin: center;
+		}
+		#ID479e9f25c6fafffbf1b8863deeb0 {
+			filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
+			position: absolute;
+			width: 33%;
+			height: 70%;
+			left: 14%;
+			top: 15%;
+			overflow: visible;
+		}
+		#Group_8 {
+			filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
+			position: absolute;
+			width: 33%;
+			height: 70%;
+			right: 14%;
+			top: 15%;
+			overflow: visible;	
+		}
+		#Rectangle_8 {
+			fill: rgba(245,222,133,1);
+		}
+		.Rectangle_8 {
+			filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
+			position: absolute;
+			overflow: visible;
+			width: 100%;
+			height: 100%;
+			left: 0px;
+			top: 0px;
+		}
+		#Group_5 {
+			position: absolute;
+			width: 93%;
+			height: 12%;
+			left: 4%;
+			top: 18%;
+			overflow: visible;
+		}
+		#Rectangle_3 {
+			width: 92%;
+			height: 92%;
+			opacity: 0.38;
+			background-color: rgba(239,244,247,1);
+		}
+		.Rectangle_3 {
+			position: absolute;
+			overflow: visible;
+			width: 92%;
+			height: 50%;
+			left: 4%;
+			top: 50%;
+		}
+		#Username {
+			width: 92%;
+			height: 26%;
+			left: 5%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 32px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: left;
+		}
+		#Rectangle_3_in {
+			width: 100%;
+			height: 100%;
+		}
+		#Group_5_1 {
+			position: absolute;
+			width: 93%;
+			height: 12%;
+			left: 4%;
+			top: 31%;
+			overflow: visible;
+		}
+		#Rectangle_3_1 {
+			width: 92%;
+			height: 92%;
+			opacity: 0.38;
+			background-color: rgba(239,244,247,1);
+		}
+		.Rectangle_3_1 {
+			position: absolute;
+			overflow: visible;
+			width: 92%;
+			height: 50%;
+			left: 4%;
+			top: 50%;
+		}
+		#Rectangle_3_in_1 {
+			width: 100%;
+			height: 100%;
+			padding: 5%;
+			font-size: 20px;
+		}
+		#Servername {
+			width: 92%;
+			height: 26%;
+			left: 5%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 32px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: left;
+		}
+		#Group_6 {
+			position: absolute;
+			width: 86%;
+			height: 30%;
+			left: 4%;
+			top: 53%;
+			overflow: visible;
+		}
+		#Rectangle_3_p {
+			opacity: 0.38;
+			background-color: rgba(239,244,247,1);
+			border-radius: 5px;
+			height: 100%;
+			width: 100%;
+		}
+		.Rectangle_3_p {
+			position: absolute;
+			overflow: visible;
+			width: 93%;
+			height: 85%;
+			left: 4%;
+			top: 20%;
+		}
+
+		#key_data {
+			width: 93%;
+			height: 15%;
+			left: 5%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 32px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: left;
+		}
+
+		#Text_Area {
+			opacity: 0.19;
+			left: 11px;
+			top: 9.885px;
+			position: absolute;
+			overflow: visible;
+			width: 59px;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 12px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+		}
+		#Group_7 {
+			position: absolute;
+			width: 93%;
+			height: 10%;
+			left: 4%;
+			top: 44%;
+			overflow: visible;
+		}
+		#Upload {
+			height: 100%;
+			width: 100%;
+			background-color: rgba(255,100,124,1);
+			border-radius: 15px;
+			font-size: 20px;
+
+		}
+		.Rectangle_5 {
+			position: absolute;
+			overflow: visible;
+			width: 20%;
+			height: 60%;
+			left: 40%;
+			top: 20%;
+		}
+		#Login_u {
+			width: 15.7%;
+			height: 69px;
+			left: 69.5%;
+			top: 16.4%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 25px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: center;
+			line-height:69px;
+			background-color: rgb(231, 192, 37);
+		}
+		
+		#Register {
+			width: 15.7%;
+			height: 69px;
+			left: 53.8%;
+			top: 16.4%;
+			position: absolute;
+			overflow: visible;
+			white-space: nowrap;
+			text-align: left;
+			font-family: Butler;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 25px;
+			color: rgba(0,0,0,1);
+			letter-spacing: 0.56px;
+			text-align: center;
+			line-height:69px;
+		}
+	</style>
+</head>
+<body>
+<div id="Login">
+	<svg class="Rectangle_6">
+		<rect id="Rectangle_6" rx="0" ry="0" x="0" y="0" width="100%" height="100%">
+		</rect>
+	</svg>
+	<img id="ID479e9f25c6fafffbf1b8863deeb0" src="./images/ID479e9f25c6fafffbf1b8863deeb0.png" srcset="./images/ID479e9f25c6fafffbf1b8863deeb0.png 1x, ./images/ID479e9f25c6fafffbf1b8863deeb0@2x.png 2x">
+		
+	<div id="Group_8">
+		<svg class="Rectangle_8">
+			<rect id="Rectangle_8" rx="0" ry="0" x="2%" y="2%" width="96%" height="96%">
+			</rect>
+		</svg>
+		<div id="Group_5">
+			<div class="Rectangle_3">
+				<div id="Rectangle_3">
+					<input id="Rectangle_3_in" type='file' accept='application/JSON' onchange='openFile(event)'>
+				</div>
+			</div>
+			<div id="Username">
+				<span>Credentials File</span>
+			</div>
+		</div>
+
+		<div id="Group_5_1">
+			<div class="Rectangle_3_1">
+				<div id="Rectangle_3_1">
+					<input id="Rectangle_3_in_1" type='text'>
+				</div>
+			</div>
+			<div id="Servername">
+				<span>Server Name</span>
+			</div>
+		</div>
+
+		<div id="Group_6">
+			<label id="key_data">Token Data</label>
+			<div class="Rectangle_3_p">
+				<textarea readonly id="Rectangle_3_p" name="Rectangle_3_p" rows="12" cols="63"></textarea>
+				<a href="" id="a">click here to download your file</a>
+			</div>
+			
+		</div>
+		<div id="Group_7">
+			<div class="Rectangle_5">
+				<button id="Upload" onclick="begin()">Upload</button>
+			</div>
+		</div>
+	</div>
+	<button id="Login_u">
+		Login
+	</button>
+	<button id="Register" onclick="location.href = 'Register.html';">
+		Register
+	</button>
+</div>
+</body>
+</html>

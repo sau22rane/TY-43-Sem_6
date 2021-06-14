@@ -35,21 +35,21 @@ int main(){
     string key_str;
     int key = 0, len;
     cout<<"Enter a Key(16 bits): ";         // 0100101011110101   19189
-    cin>>key;
-//    len = key_str.length();
-//    for(int i = 0; i<len; i++){
-//        key = key<<1;
-//        key|=(key_str.at(i) - '0');
-//    }
+    cin>>key_str;
+   len = key_str.length();
+   for(int i = 0; i<len; i++){
+       key = key<<1;
+       key|=(key_str.at(i) - '0');
+   }
 
     int data= 0 ;
-//    string data_str;
+   string data_str;
     cout<<"Enter data(16 bits): ";          // 1101011100101000   55080
-    cin>>data;
-//    for(int i = 0; i<16; i++){
-//        data = data<<1;
-//        data|=(data_str.at(i) - '0');
-//    }
+    cin>>data_str;
+   for(int i = 0; i<16; i++){
+       data = data<<1;
+       data|=(data_str.at(i) - '0');
+   }
     cout<<"\nKey:\t";
     binary(key, 16);
     cout<<"Data:\t";

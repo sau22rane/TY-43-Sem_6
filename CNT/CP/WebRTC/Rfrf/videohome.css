@@ -1,0 +1,218 @@
+@import "https://github.com/AgoraIO/Basic-Video-Call/blob/master/Group-Video/OpenVideoCall-Web/src/assets/color.scss";
+ #page-index {
+	 background-image: url(home_background.jpg) center no-repeat;
+	 background-size: cover;
+	 position: relative;
+	 min-height: 100%;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 flex-flow: column;
+}
+ #page-index .ag-footer {
+	 display: flex;
+	 padding: 0 2.14rem;
+	 justify-content: space-between;
+	 align-items: center;
+}
+ .login-wrapper {
+	 max-width: 21rem;
+	 font-size: 1rem;
+}
+ .login-header {
+	 text-align: center;
+	 margin: 2.14rem 0;
+}
+ .login-header p {
+	 margin: 0.71rem 0;
+}
+ .login-header img {
+	 width: 50%;
+}
+ .login-footer {
+	 text-align: center;
+	 margin: 2.14rem 0;
+}
+ .login-title {
+	 font-size: 1.14rem;
+}
+ #channel {
+	 background: transparent;
+	 padding: 0.57rem 3.57rem;
+	 height: 2.5rem;
+	 margin-bottom: 1rem;
+}
+ #channel-wrapper > span {
+	 height: 2.5rem !important;
+}
+ #channel-wrapper.has-icons-left .icon.is-left {
+	 left: 1.07rem;
+}
+ #channel::-webkit-input-placeholder {
+	 opacity: 0.5;
+}
+ #baseMode {
+	 font-size: 1rem;
+	 width: 11.43rem;
+	 border: 0.07rem solid transparent !important;
+}
+ #joinBtn {
+	 width: 100%;
+	 font-size: 1.28rem;
+	 padding: 0.71rem;
+}
+ #joinBtn:hover {
+	 box-shadow: 0 0.14rem 0.14rem 0.07rem;
+	 transition: box-shadow 0.1s ease-in-out;
+}
+ #advancedProfile {
+	 width: 7.5rem;
+	 font-size: 0.86rem;
+	 height: 2.29rem;
+	 background: transparent;
+	 border: 0.07rem solid;
+}
+ #advancedProfilehover {
+	 transition: 0.1s background ease-in-out;
+}
+ #attendeeMode {
+	 line-height: 1.3;
+}
+ #attendeeMode input[type="radio"] {
+	 position: fixed;
+	 left: 1000rem;
+}
+ #attendeeMode input[type="radio"]:checked + .radio-btn {
+	 background-size: cover;
+	 background: url('../../assets/images/ag-oval-active.png') no-repeat center;
+}
+ #attendeeMode input[type="radio"]:checked + .radio-btn + .radio-img.video {
+	 background: url('../../assets/images/ag-video-active-s.png') no-repeat center;
+}
+ #attendeeMode input[type="radio"]:checked + .radio-btn + .radio-img.audio {
+	 background: url('../../assets/images/ag-mic-active-s.png') no-repeat center;
+}
+ #attendeeMode input[type="radio"]:checked + .radio-btn + .radio-img.audience {
+	 background: url('../../assets/images/ag-audience-active.png') no-repeat center;
+}
+ #attendeeMode input[type="radio"]:checked + .radio-btn + .radio-img + .radio-msg {
+	 opacity: 1;
+}
+ #attendeeMode .radio {
+	 display: flex;
+	 align-items: center;
+}
+ #attendeeMode .radio-img {
+	 width: 30px;
+	 height: 30px;
+}
+ #attendeeMode .radio-img.video {
+	 position: relative;
+	 left: 0.21rem;
+	 background-size: cover;
+	 background: url('../../assets/images/ag-video-s.png') no-repeat center;
+}
+ #attendeeMode .radio-img.audio {
+	 background: url('../../assets/images/ag-mic-s.png') no-repeat center;
+}
+ #attendeeMode .radio-img.audience {
+	 background: url('../../assets/images/ag-audience.png') no-repeat center;
+}
+ #attendeeMode .radio-btn {
+	 width: 24px;
+	 height: 24px;
+	 margin-right: 0.71rem;
+	 background: url('../../assets/images/ag-oval.png') no-repeat center;
+}
+ #attendeeMode .radio-msg {
+	 margin-left: 0.71rem;
+}
+ #baseModeOptions .dropdown-item {
+	 text-align: center;
+	 padding: 0.57rem;
+	 cursor: pointer;
+}
+ #baseModeOptions .dropdown-item:hover {
+	 background: #e8ecee;
+}
+ #baseModeOptions .dropdown-item p:first-child {
+	 font-size: 1rem;
+	 font-weight: bold;
+}
+ #baseModeOptions .dropdown-item hr {
+	 margin: 0.71rem;
+}
+ #baseModeOptions .dropdown-item p:nth-child(3) {
+	 font-size: 0.86rem;
+	 color: rgba(0, 0, 0, .5);
+}
+ #advancedOptions {
+	 font-size: 1rem;
+	 width: 23rem;
+}
+ #advancedOptions .dropdown-content {
+	 border-radius: 0.86rem;
+	 border: 0.07rem solid;
+	 text-align: center;
+	 padding: 0.86rem 0.21rem;
+	 cursor: pointer;
+}
+ #advancedOptions .dropdown-content .dropdown-item {
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-around;
+}
+ #advancedOptions .dropdown-content .dropdown-item select {
+	 width: 15rem;
+}
+ #advancedOptions .dropdown-item:first-child {
+	 white-space: nowrap;
+}
+ .validate-msg {
+	 animation: tooltip 0.3s ease-in-out;
+	 width: 100%;
+	 position: relative;
+	 text-align: center;
+}
+ .validate-icon {
+	 position: absolute;
+	 right: -2.5rem;
+	 top: 0;
+	 font-size: 2rem;
+	 display: inline-flex;
+	 justify-content: center;
+	 align-items: center;
+}
+ #dropdown-container {
+	 display: flex;
+	 justify-content: space-between;
+	 flex: 1 1 0;
+	 margin-bottom: 1rem;
+}
+ .dropdown.is-active .dropdown-menu {
+	 animation: dropdown 0.25s ease-in-out;
+}
+ .dropdown.is-active #advancedProfile {
+	 transition: 0.1s background ease-in-out;
+}
+ @keyframes dropdown {
+	 from {
+		 opacity: 0;
+		 transform: scale(0.92) translate(0, -4px);
+	}
+	 to {
+		 opacity: 1;
+		 transform: scale(none) translate(none);
+	}
+}
+ @keyframes tooltip {
+	 from {
+		 opacity: 0;
+		 max-height: 0;
+	}
+	 to {
+		 opacity: 1;
+		 max-height: 2.5rem;
+	}
+}
+ 
